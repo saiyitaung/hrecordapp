@@ -1,0 +1,4 @@
+enum HelpType{
+  Sugarcane,
+  Normal
+}
