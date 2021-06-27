@@ -216,11 +216,11 @@ class _MyHomePageState extends State<MyHomePage>
                                   });
                                 },
                                 leading: Container(
-                                  width: 40,
-                                  height: 40,
+                                  width: 45,
+                                  height: 45,
                                   child: Image(
                                     fit: BoxFit.scaleDown,
-                                    image: AssetImage("img/rpage.png"),
+                                    image: AssetImage("img/file.png"),
                                   ),
                                 ),
                                 // leading: Icon(
@@ -332,7 +332,7 @@ class _MyHomePageState extends State<MyHomePage>
                                       child: Text("Close"))
                                 ],
                                 content: Text(
-                                  "version :  1.0  \n release in 2021 \n contact me  :  \ntwitter @saiyitaung ",
+                                  "version :  1.1.0  \n release in 2021 \n contact me  :  \ntwitter @saiyitaung ",
                                   textAlign: TextAlign.center,
                                 ),
                               ));
