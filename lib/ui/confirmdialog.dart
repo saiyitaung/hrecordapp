@@ -23,7 +23,7 @@ class ConfirmDialog extends StatelessWidget {
               Navigator.pop(context, false);
             },
             child: Text(
-              "Cancel",
+              "ဢမ်ႇ",
               style: TextStyle(color: Colors.red),
             )),width: MediaQuery.of(context).size.width/3,),
             Container(width: MediaQuery.of(context).size.width/3,child:
@@ -34,7 +34,7 @@ class ConfirmDialog extends StatelessWidget {
               Navigator.pop(context, true);
             },
             child: Text(
-              "Comfirm",
+              "တူၵ်းလူင်း",
               style: TextStyle(color: Colors.green),
             )),),
       ],

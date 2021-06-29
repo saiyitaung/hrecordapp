@@ -57,7 +57,7 @@ class _ItemDetailState extends State<ItemDetail> {
       // resizeToAvoidBottomPadding: false,
       //resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text("${item.name}"),
+        title: Text("${item.name}",style: TextStyle(fontSize: 16),),
         actions: [
           IconButton(
               icon: Icon(Icons.delete),
@@ -175,7 +175,7 @@ class _ItemDetailState extends State<ItemDetail> {
                         price != 0
                             ? utils.subHelpCount(item) == 0
                                 ? Container()
-                                : Container(
+                                : Padding(child:Container(
                                     width: MediaQuery.of(context).size.width,
                                     height: 60,
                                     // color: Colors.black12,
@@ -185,38 +185,36 @@ class _ItemDetailState extends State<ItemDetail> {
                                           child: Container(
                                             child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
-                                                Flexible(
-                                                    flex: 2,
-                                                    child: Container(
-                                                        child: Text(
-                                                      "Count",
-                                                      style: TextStyle(
-                                                          fontSize: 22,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ))),
-                                                Flexible(
-                                                    flex: 2,
-                                                    child: Container(
-                                                        child: Text(
-                                                      "Price",
-                                                      style: TextStyle(
-                                                          fontSize: 22,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ))),
-                                                Flexible(
-                                                    flex: 2,
-                                                    child: Container(
-                                                        child: Text(
-                                                      "Total Pay",
-                                                      style: TextStyle(
-                                                          fontSize: 22,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ))),
+                                                Container(
+                                                    child: Text(
+                                                  "ၼပ်ႉ",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontSize: 18,                                                      
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )),
+                                                Container(
+                                                    child: Text(
+                                                  "ၵႃႈၶၼ်",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )),
+                                                Container(
+                                                    child: Text(
+                                                  "ၶၼ်ႁပ်ႉတုမ်ႊ",
+                                                  textAlign: TextAlign.center,
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold),
+                                                )),
                                               ],
                                             ),
                                           ),
@@ -225,51 +223,51 @@ class _ItemDetailState extends State<ItemDetail> {
                                           child: Container(
                                             child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
-                                                Flexible(
-                                                    flex: 2,
-                                                    child: Container(
-                                                        child: Text(
-                                                      utils.subHelpCount(item) <
-                                                              0
-                                                          ? "${-utils.subHelpCount(item)}"
-                                                          : "${utils.subHelpCount(item)}",
-                                                      style: TextStyle(
-                                                          fontSize: 20),
-                                                    ))),
-                                                Flexible(
-                                                  flex: 2,
-                                                  child: Container(
+                                                Container(
                                                     child: Text(
-                                                      item.isfinished ? "${item.paid.price / item.paid.count}" :"$price",
-                                                      style: TextStyle(
-                                                          fontSize: 20),
-                                                    ),
+                                                      
+                                                  utils.subHelpCount(item) < 0
+                                                      ? "${-utils.subHelpCount(item)}"
+                                                      : "${utils.subHelpCount(item)}",
+                                                      textAlign: TextAlign.center,
+                                                  style:
+                                                      TextStyle(fontSize: 20),
+                                                )),
+                                                Container(
+                                                  child: Text(
+                                                    item.isfinished
+                                                        ? "${item.paid.price / item.paid.count}"
+                                                        : "$price",
+                                                        textAlign: TextAlign.center,
+                                                    style:
+                                                        TextStyle(fontSize: 20),
                                                   ),
                                                 ),
-                                                Flexible(
-                                                    flex: 2,
-                                                    child: Container(
-                                                        child: Text(
-                                                          item.isfinished ? "${item.paid.price}":
-                                                      utils.pay(
+                                                Container(
+                                                    child: Text(
+                                                  item.isfinished
+                                                      ? "${item.paid.price}"
+                                                      : utils.pay(
                                                                   item,
                                                                   price
                                                                       .toDouble()) <
                                                               0
                                                           ? "${-utils.pay(item, price.toDouble())}"
                                                           : "${utils.pay(item, price.toDouble())}",
-                                                      style: TextStyle(
-                                                          fontSize: 20),
-                                                    ))),
+                                                          textAlign: TextAlign.center,
+                                                  style:
+                                                      TextStyle(fontSize: 20),
+                                                )),
                                               ],
                                             ),
                                           ),
                                         ),
                                       ],
                                     ),
-                                  )
+                                  ),padding: EdgeInsets.symmetric(horizontal: 10),)
                             : Container(
                                 padding: EdgeInsets.only(left: 10, right: 10),
                                 child: price <= 0
@@ -287,9 +285,9 @@ class _ItemDetailState extends State<ItemDetail> {
                                       context: context,
                                       builder: (context) {
                                         return ConfirmDialog(
-                                          name: "Payment Confirm ?",
+                                          name: "တေသွၼ်ႇတေႉႁိုဝ်?",
                                           content:
-                                              "Are you sure? \n It is done. \n You can not change it later . ",
+                                              "ပေႃးသွၼ်ႇယဝ်ႉလႅၵ်ႈလၢႆႊၶိုၼ်းဢမ်ႇလႆႈယဝ်ႉ",
                                         );
                                       }).then((value) {
                                     if (value) {
@@ -310,9 +308,9 @@ class _ItemDetailState extends State<ItemDetail> {
                             padding: EdgeInsets.only(top: 5, bottom: 5),
                             child: Text(
                               utils.subHelpCount(item) == 0
-                                  ? "Done"
+                                  ? "ယဝ်ႉ"
                                   : utils.subHelpCount(item) < 0
-                                      ? " Paid "
+                                      ? " ၸၢႆႇႁႂ်ႈယဝ်ႉ "
                                       : " received paymanent",
                             ),
                           ),

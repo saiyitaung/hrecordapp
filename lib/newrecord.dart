@@ -19,7 +19,7 @@ class _NewRecordState extends State<NewRecord> {
       // resizeToAvoidBottomPadding: false,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text("New Record"),
+        title: Text("တၢင်ႇၽိုၼ်မႂ်ႇ"),
       ),
       body: Container(
         margin: EdgeInsets.only(
@@ -36,71 +36,102 @@ class _NewRecordState extends State<NewRecord> {
                     width: 2, color: Colors.teal, style: BorderStyle.solid),
                 borderRadius: BorderRadius.circular(100),
               ),
-              width: 150,
-              height: 150,
+              width: 100,
+              height: 100,
               child: Image(
                 image: AssetImage(himg),
                 fit: BoxFit.scaleDown,
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 5, bottom: 5),
-              decoration: BoxDecoration(
-                color: Colors.teal,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
-                child: DropdownButton(
-                  dropdownColor: Colors.teal,
-                  iconEnabledColor: Colors.white,
-                  iconSize: 30,
-                  isExpanded: true,
-                  style: TextStyle(color: Colors.white, fontSize: 18,),
-                  items: helpTypes
-                      .map(
-                        (e) => DropdownMenuItem(
-                          child: Text(
-                            e,
-                          ),
-                          onTap: () {
-                            setState(() {
-                              selectedItem = e;
-                              if (e == "မႆၢႁႅင်းဝၼ်း") {
+              // color: Colors.white,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    child: Row(
+                      children: [
+                        Radio(
+                            value: "မႆၢႁႅင်းဝၼ်း",
+                            groupValue: selectedItem,
+                            onChanged: (v) {
+                              setState(() {
+                                selectedItem = v;
                                 himg = "img/nh.png";
-                              } else {
+                              });
+                            }),
+                        Text("မႆၢႁႅင်းဝၼ်း",style: TextStyle(color: selectedItem=="မႆၢႁႅင်းဝၼ်း"?Colors.teal:null),),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Row(
+                      children: [
+                        Radio(
+                            value: "မႆၢႁႅင်းလိတ်ႉဢွႆႈ",
+                            groupValue: selectedItem,
+                            onChanged: (v) {
+                              setState(() {
+                                selectedItem = v;
                                 himg = "img/sgc.png";
-                              }
-                            });
-                          },
-                          value: e,
-                        ),
-                      )
-                      .toList(),
-                  onChanged: (s) {
-                    setState(() {
-                      selectedItem = s;
-                    });
-                  },
-                  selectedItemBuilder: (context) {
-                    return helpTypes
-                        .map((e) => Container(
-                              child: Text(
-                                e,
-                              ),
-                              padding:
-                                  EdgeInsets.only(left: 20, top: 5, bottom: 5),
-                            ))
-                        .toList();
-                  },
-                  value: selectedItem,
-                ),
+                              });
+                            }),
+                        Text("မႆၢႁႅင်းလိတ်ႉဢွႆႈ",style: TextStyle(color: selectedItem=="မႆၢႁႅင်းလိတ်ႉဢွႆႈ"?Colors.teal:null),)
+                      ],
+                    ),
+                  )
+                ],
+
+                // child: DropdownButton(
+                //   dropdownColor: Colors.teal,
+                //   iconEnabledColor: Colors.white,
+                //   iconSize: 30,
+                //   isExpanded: true,
+                //   style: TextStyle(color: Colors.white, fontSize: 18,),
+                //   items: helpTypes
+                //       .map(
+                //         (e) => DropdownMenuItem(
+                //           child: Text(
+                //             e,
+                //           ),
+                //           onTap: () {
+                //             setState(() {
+                //               selectedItem = e;
+                //               if (e == "မႆၢႁႅင်းဝၼ်း") {
+                //                 himg = "img/nh.png";
+                //               } else {
+                //                 himg = "img/sgc.png";
+                //               }
+                //             });
+                //           },
+                //           value: e,
+                //         ),
+                //       )
+                //       .toList(),
+                //   onChanged: (s) {
+                //     setState(() {
+                //       selectedItem = s;
+                //     });
+                //   },
+                //   selectedItemBuilder: (context) {
+                //     return helpTypes
+                //         .map((e) => Container(
+                //               child: Text(
+                //                 e,
+                //               ),
+                //               padding:
+                //                   EdgeInsets.only(left: 20, top: 5, bottom: 5),
+                //             ))
+                //         .toList();
+                //   },
+                //   value: selectedItem,
+                // ),
               ),
             ),
             SizedBox(height: 10),
             TextField(
               decoration: InputDecoration(
-                  hintText: "Record Name",
+                  hintText: "သႂ်ပၼ်ၸိုဝ်ႈ",
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   )),
@@ -134,13 +165,13 @@ class _NewRecordState extends State<NewRecord> {
               },
               child: Container(
                 child: Text(
-                  "Create",
+                  "ႁဵတ်းဢၼ်မႂ်ႇ",
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
                 width: double.infinity,
                 margin: EdgeInsets.only(left: 10, right: 10),
-                padding: EdgeInsets.only(top: 10, bottom: 10),
+                padding: EdgeInsets.only(top: 3, bottom: 3),
               ),
               // color: Theme.of(context).primaryColor,
               style: ButtonStyle(

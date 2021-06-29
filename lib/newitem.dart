@@ -38,7 +38,7 @@ class _NewItemState extends State<NewItem> {
       // resizeToAvoidBottomPadding: false,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text("New Person"),
+        title: Text("မၢႆဢၼ်မႂ်ႇ"),
       ),
       body: Container(
         margin: EdgeInsets.only(left: 10, right: 10, top: 20),
@@ -48,7 +48,7 @@ class _NewItemState extends State<NewItem> {
               controller: nameCtl,
               //focusNode: FocusScope.of(context),
               decoration: InputDecoration(
-                  hintText: "Name",
+                  hintText: "ၸိုဝ်ႈ",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10))),
             ),
@@ -56,52 +56,97 @@ class _NewItemState extends State<NewItem> {
             Container(
               margin: EdgeInsets.only(bottom: 10),
               padding: EdgeInsets.only(left: 10, right: 10),
-              decoration: BoxDecoration(
-                  color: Colors.teal, borderRadius: BorderRadius.circular(10)),
-              child: Padding(
-                padding: EdgeInsets.only(left: 10, right: 10),
-                child: DropdownButton<String>(
-                  dropdownColor: Colors.teal,
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                  isExpanded: true,
-                  iconSize: 30,
-                  iconEnabledColor: Colors.white,
-                  items: choice
-                      .map(
-                        (e) => DropdownMenuItem<String>(
-                          child: Text(
-                            e,
-                            textAlign: TextAlign.center,
-                          ),
-                          onTap: () {
-                            setState(() {
-                              selecteditem = e;
-                            });
-                          },
-                          value: e,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    child: Row(
+                      children: [
+                        Radio(
+                            value: "မႃးထႅမ်ႁဝ်း",
+                            groupValue: selecteditem,
+                            onChanged: (v) {
+                              setState(() {
+                                selecteditem = v;
+                              });
+                            }),
+                        Text(
+                          "မႃးထႅမ်ႁဝ်း",
+                          style: TextStyle(
+                              color: selecteditem == "မႃးထႅမ်ႁဝ်း"
+                                  ? Colors.teal
+                                  : null),
                         ),
-                      )
-                      .toList(),
-                  onChanged: (d) {
-                    //print(selecteditem);
-                  },
-                  selectedItemBuilder: (context) => choice
-                      .map(
-                        (e) => Container(
-                          child: Text(
-                            e,
-                          ),
-                          padding: EdgeInsets.only(left: 10),
-                        ),
-                      )
-                      .toList(),
-                  value: selecteditem,
-                ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    child: Row(
+                      children: [
+                        Radio(
+                            value: "ႁဝ်းၵႃႇထႅမ်",
+                            groupValue: selecteditem,
+                            onChanged: (v) {
+                              setState(() {
+                                selecteditem = v;
+                              });
+                            }),
+                        Text(
+                          "ႁဝ်းၵႃႇထႅမ်",
+                          style: TextStyle(
+                              color: selecteditem == "ႁဝ်းၵႃႇထႅမ်"
+                                  ? Colors.teal
+                                  : null),
+                        )
+                      ],
+                    ),
+                  )
+                ],
               ),
+              // child: Padding(
+              //   padding: EdgeInsets.only(left: 10, right: 10),
+
+              // child: DropdownButton<String>(
+              //   dropdownColor: Colors.teal,
+              //   style: TextStyle(color: Colors.white, fontSize: 18),
+              //   isExpanded: true,
+              //   iconSize: 30,
+              //   iconEnabledColor: Colors.white,
+              //   items: choice
+              //       .map(
+              //         (e) => DropdownMenuItem<String>(
+              //           child: Text(
+              //             e,
+              //             textAlign: TextAlign.center,
+              //           ),
+              //           onTap: () {
+              //             setState(() {
+              //               selecteditem = e;
+              //             });
+              //           },
+              //           value: e,
+              //         ),
+              //       )
+              //       .toList(),
+              //   onChanged: (d) {
+              //     //print(selecteditem);
+              //   },
+              //   selectedItemBuilder: (context) => choice
+              //       .map(
+              //         (e) => Container(
+              //           child: Text(
+              //             e,
+              //           ),
+              //           padding: EdgeInsets.only(left: 10),
+              //         ),
+              //       )
+              //       .toList(),
+              //   value: selecteditem,
+              // ),
             ),
             TextField(
               decoration: InputDecoration(
-                  hintText: "Detail",
+                  hintText: "လွင်ႈ/ဢွင်ႈတီႈ",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10))),
               controller: detailCtl,
@@ -183,12 +228,12 @@ class _NewItemState extends State<NewItem> {
               },
               child: Container(
                 child: Text(
-                  " Create",
+                  " ႁဵတ်းဢၼ်မႂ်ႇ",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 22, color: Colors.white),
+                  style: TextStyle(fontSize: 20, color: Colors.white),
                 ),
                 width: double.infinity,
-                padding: EdgeInsets.only(top: 15, bottom: 15),
+                // padding: EdgeInsets.only(top: 3, bottom: 3),
               ),
               style: ButtonStyle(
                   backgroundColor:

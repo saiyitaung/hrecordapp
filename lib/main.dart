@@ -53,6 +53,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        scaffoldBackgroundColor: Colors.grey[300],
         primaryColor: Colors.teal,
         accentColor: Colors.teal[300],
         textTheme: Theme.of(context)
@@ -161,7 +162,7 @@ class _MyHomePageState extends State<MyHomePage>
                   return Container(
                     height: height,
                     width: width,
-                    color: Colors.white,
+                    color:Theme.of(context).scaffoldBackgroundColor,
                     child: Column(
                       children: [
                         Container(
@@ -189,7 +190,7 @@ class _MyHomePageState extends State<MyHomePage>
                                   )),
                               Padding(
                                 child: Text(
-                                  "Records",
+                                  "ၽိုၼ်မၢႆ",
                                   style: TextStyle(
                                       fontSize: 25, color: Colors.white),
                                 ),
@@ -205,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage>
                               return ListTile(
                                 title: Text(
                                   "${records[index].name}",
-                                  style: TextStyle(fontSize: 24),
+                                  style: TextStyle(fontSize: 16),
                                 ),
                                 onTap: () {
                                   route(RecordDetail(r: records[index]))
@@ -332,7 +333,7 @@ class _MyHomePageState extends State<MyHomePage>
                                       child: Text("Close"))
                                 ],
                                 content: Text(
-                                  "version :  1.1.0  \n release in 2021 \n contact me  :  \ntwitter @saiyitaung ",
+                                  "version :  1.2.0  \n release in 2021 \n contact me  :  \ntwitter @saiyitaung ",
                                   textAlign: TextAlign.center,
                                 ),
                               ));
@@ -352,6 +353,7 @@ class _MyHomePageState extends State<MyHomePage>
         },
         child: Container(
           child: FloatingActionButton(
+            backgroundColor: Theme.of(context).primaryColor,
             onPressed: () {
               Navigator.push(
                   context,

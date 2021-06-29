@@ -120,7 +120,7 @@ class _RecordDetailState extends State<RecordDetail>
                           SliverAppBar(
                             title: Text(
                               "${r.name}",
-                              style: TextStyle(fontSize: 24),
+                              style: TextStyle(fontSize: 18),
                             ),
                             pinned: true,
                             expandedHeight: 130,
@@ -163,20 +163,21 @@ class _RecordDetailState extends State<RecordDetail>
                                       color: Colors.black,
                                       blurRadius: .5)
                                 ],
-                                color: Colors.white,
+                                color:Theme.of(context).scaffoldBackgroundColor,
                               ),
                               child: ListTile(
+                                contentPadding: EdgeInsets.all(6),
                                 dense: true,
                                 leading: Text("${index + 1}"),
                                 title: Text(
                                   item.name.length < 15
                                       ? item.name
-                                      : item.name.substring(0, 15) + "...",
+                                      : item.name.substring(0, 20) + "...",
                                   style: TextStyle(
                                       color: item.isfinished
                                           ? Colors.black.withOpacity(.5)
                                           : Colors.black,
-                                      fontSize: 20,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.normal,
                                       decoration: item.isfinished
                                           ? TextDecoration.lineThrough
@@ -493,9 +494,10 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
         Container(
           margin: EdgeInsets.only(top: 20),
           width: MediaQuery.of(context).size.width,
+         
           height: 60,
           decoration: BoxDecoration(
-              color: Colors.white,
+              color:Theme.of(context).scaffoldBackgroundColor,
               boxShadow: [
                 BoxShadow(
                     offset: Offset(0.0, 2.0),
@@ -510,6 +512,7 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
               Flexible(
                 flex: 1,
                 child: Container(
+                  
                   padding: EdgeInsets.only(top: 10, left: 10, right: 2),
                   child: Icon(
                     Icons.search,
@@ -521,6 +524,7 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
               Flexible(
                 flex: 5,
                 child: Container(
+                  
                   child: TextField(
                     cursorColor: Colors.teal,
                     style: TextStyle(color: Colors.teal, fontSize: 20),
@@ -558,7 +562,7 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
                       onPressed: () {
                         Navigator.of(context).pop("createNew");
                       },
-                      child: Text("Create new"),
+                      child: Text("မၢႆဢၼ်မႂ်ႇ"),
                     ),
                   ),
                 ),
@@ -578,7 +582,7 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
                       color: Colors.black,
                       blurRadius: .5)
                 ],
-                color: Colors.white,
+              color:Theme.of(context).scaffoldBackgroundColor,
               ),
               child: ListTile(
                 dense: true,
@@ -586,12 +590,12 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
                 title: Text(
                   item.name.length < 15
                       ? item.name
-                      : item.name.substring(0, 15) + "...",
+                      : item.name.substring(0, 20) + "...",
                   style: TextStyle(
                       color: item.isfinished
                           ? Colors.black.withOpacity(.5)
                           : Colors.black,
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.normal,
                       decoration:
                           item.isfinished ? TextDecoration.lineThrough : null),

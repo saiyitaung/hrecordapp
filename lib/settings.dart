@@ -20,10 +20,10 @@ class _SettingState extends State<Settings> {
         settings.get("regularhelp") != null ? settings.get("regularhelp") : "0";
     defaultsugarcanedetailCtl.text = settings.get("sugarcanedetail") != null
         ? settings.get("sugarcanedetail")
-        : "detail";
+        : "လွင်ႈတၢင်း";
     defaultregulardetailCtl.text = settings.get("regulardetail") != null
         ? settings.get("regulardetail")
-        : "detail";
+        : "လွင်ႈတၢင်း";
     return Scaffold(
       appBar: AppBar(
         title: Text("Setting"),
@@ -34,7 +34,7 @@ class _SettingState extends State<Settings> {
           // TextField(controller: regularHelpPrice,keyboardType: TextInputType.number,maxLength: 3,onChanged: (c){print(c);},),
           // TextField(controller: sugarcanePearPrice,keyboardType: TextInputType.number,maxLength: 3,),
           ListTile(
-            title: Text("ၵႃႊၶၼ်လိတ်ႉဢွႆႈ default price "),
+            title: Text("ၵႃႊၶၼ် တႃႇ လိတ်ႉဢွႆႈ"),
             subtitle: ValueListenableBuilder(
               builder: (context, box, child) {
                 return Text("${sugarcanePearPrice.text} kyats");
@@ -46,9 +46,9 @@ class _SettingState extends State<Settings> {
                   context: context,
                   builder: (context) => EditDefaultPrice(
                         t: sugarcanePearPrice,
-                        title: "ၵႃႊၶၼ်လိတ်ႉဢွႆႈ  \n default price ",
+                        title: "ၵႃႊၶၼ် တႃႇ လိတ်ႉဢွႆႈ",
                       )).then((value) {
-                 // print(sugarcanePearPrice.text);
+                // print(sugarcanePearPrice.text);
                 // if (settings.get("sugarcaneprice") != null) {
                 //   settings.put("sugarcaneprice", sugarcanePearPrice.text);
                 // } else {
@@ -60,7 +60,7 @@ class _SettingState extends State<Settings> {
             },
           ),
           ListTile(
-            title: Text("ၵႃႊၶၼ်ႁႅင်းဝၼ်း default price for half day"),
+            title: Text("ၵႃႊၶၼ် တႃႇ ႁႅင်းဝၼ်း"),
             subtitle: ValueListenableBuilder(
               builder: (context, box, child) {
                 return Text("${regularHelpPrice.text} kyats");
@@ -72,9 +72,9 @@ class _SettingState extends State<Settings> {
                   context: context,
                   builder: (context) => EditDefaultPrice(
                         t: regularHelpPrice,
-                        title: "ၵႃႊၶၼ်ႁႅင်းဝၼ်း default price for half day",
+                        title: "ၵႃႊၶၼ် တႃႇ ႁႅင်းဝၼ် ",
                       )).then((value) {
-                    //print(regularHelpPrice.text);
+                //print(regularHelpPrice.text);
                 // if(settings.get("regularhelp") != null){
 
                 // }
@@ -83,7 +83,7 @@ class _SettingState extends State<Settings> {
             },
           ),
           ListTile(
-            title: Text("Default text for ႁႅင်းဝၼ်း"),
+            title: Text("သႂ်ႇ လွင်ႈတၢင်း တႃႇ ႁႅင်းဝၼ်း"),
             subtitle: ValueListenableBuilder(
               builder: (context, box, child) {
                 return Text("${defaultregulardetailCtl.text}");
@@ -94,7 +94,7 @@ class _SettingState extends State<Settings> {
               showDialog(
                   context: context,
                   builder: (context) => EditDefaultDetail(
-                      title: "Default text for ႁႅင်းဝၼ်း",
+                      title: "သႂ်ႇ လွင်ႈတၢင်း တႃႇ ႁႅင်းဝၼ်း",
                       t: defaultregulardetailCtl)).then((value) {
                 if (value == true) {
                   settings.put("regulardetail", defaultregulardetailCtl.text);
@@ -103,7 +103,7 @@ class _SettingState extends State<Settings> {
             },
           ),
           ListTile(
-            title: Text("Default text for လိတ်ႉဢွႆႈ"),
+            title: Text("သႂ်ႇ လွင်ႈတၢင်း တႃႇ  လိတ်ႉဢွႆႈ"),
             subtitle: ValueListenableBuilder(
               builder: (context, box, child) {
                 return Text("${defaultsugarcanedetailCtl.text}");
@@ -114,7 +114,7 @@ class _SettingState extends State<Settings> {
               showDialog(
                   context: context,
                   builder: (context) => EditDefaultDetail(
-                      title: "Default text for လိတ်ႉဢွႆႈ",
+                      title: "သႂ်ႇ လွင်ႈတၢင်း တႃႇ လိတ်ႉဢွႆႈ",
                       t: defaultsugarcanedetailCtl)).then((value) {
                 if (value == true) {
                   settings.put(
@@ -135,22 +135,33 @@ class EditDefaultPrice extends StatelessWidget {
   EditDefaultPrice({this.title, this.t});
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(title),
+      title: Text(
+        title,
+        style: TextStyle(fontSize: 16, color: Theme.of(context).primaryColor),
+        textAlign: TextAlign.center,
+      ),
       content: TextField(
         controller: t,
         keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+          labelText: "ၵႃႈၶၼ်",
+        ),
       ),
       actions: [
         TextButton(
-            onPressed: () {
-              Navigator.pop(context, false);
-            },
-            child: Text("Cancel")),
+          onPressed: () {
+            Navigator.pop(context, false);
+          },
+          child: Text(
+            "ဢမ်ႇ",
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
         TextButton(
             onPressed: () {
               Navigator.pop(context, true);
             },
-            child: Text("Update")),
+            child: Text("တူၵ်းလူင်း")),
       ],
     );
   }
@@ -162,22 +173,34 @@ class EditDefaultDetail extends StatelessWidget {
   EditDefaultDetail({this.title, this.t});
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text(title),
+      title: Text(
+        title,
+        style: TextStyle(fontSize: 16, color: Theme.of(context).primaryColor),
+        textAlign: TextAlign.center,
+      ),
       content: TextField(
+        style: TextStyle(fontSize: 16),
         controller: t,
+        decoration: InputDecoration(
+          labelText: "လွင်ႈတၢင်း ",
+        ),
         keyboardType: TextInputType.name,
       ),
       actions: [
         TextButton(
-            onPressed: () {
-              Navigator.pop(context, false);
-            },
-            child: Text("Cancel")),
+          onPressed: () {
+            Navigator.pop(context, false);
+          },
+          child: Text(
+            "ဢမ်ႇ",
+            style: TextStyle(color: Colors.red),
+          ),
+        ),
         TextButton(
             onPressed: () {
               Navigator.pop(context, true);
             },
-            child: Text("Update")),
+            child: Text("တူၵ်းလူင်း")),
       ],
     );
   }

@@ -25,7 +25,7 @@ class HelpDetail extends StatelessWidget {
       this.hheight});
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Colors.grey[200], boxShadow: [
+      decoration: BoxDecoration(color: Colors.grey[300], boxShadow: [
         BoxShadow(
             offset: Offset(0.0, 0.0), color: Colors.black87, blurRadius: .2)
       ]),
@@ -33,16 +33,17 @@ class HelpDetail extends StatelessWidget {
       width: wwidth == null ? MediaQuery.of(context).size.width / 2 : wwidth,
       child: Column(children: [
         !isFinished ?Container(
+          
           child: ExpansionTile(           
             title: Text(
-              "add More",
+              "ထႅမ်သႂ်ႇထႅင်ႈ",
             ),
             children: [
               TextFormField(
                 keyboardType: TextInputType.text,
                 showCursor: true,
                 decoration: InputDecoration(
-                  hintText: "Detail",
+                  hintText: "လွင်ႈတၢင်း/ဢွင်ႈ/ၸိုဝ်ႈ",
                   contentPadding: EdgeInsets.only(left: 10),
                 ),
                 controller: callBackDetailController,
@@ -62,7 +63,7 @@ class HelpDetail extends StatelessWidget {
                     shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(50)),
                   ),
                   child: Text(
-                    "Add ",
+                    "ထႅင်သႂ်ႇ",
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -74,7 +75,9 @@ class HelpDetail extends StatelessWidget {
               ),
             ],
           ),
-          color: Colors.white,
+          decoration: BoxDecoration(
+            color:Theme.of(context).scaffoldBackgroundColor,            
+          ),
           margin: EdgeInsets.only(left: 2, right: 2),
         ):Container(height: 10,),
         Text(
