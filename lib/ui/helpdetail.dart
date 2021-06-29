@@ -31,7 +31,7 @@ class HelpDetail extends StatelessWidget {
             BoxShadow(
                 offset: Offset(0.0, 0.0), color: Colors.black87, blurRadius: .2)
           ]),
-      height: hheight == null ? 300 : hheight,
+      height: hheight == null ? (MediaQuery.of(context).size.height /100) * 50 : hheight,
       width: wwidth == null ? MediaQuery.of(context).size.width / 2 : wwidth,
       child: Column(children: [
         !isFinished

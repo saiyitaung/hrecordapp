@@ -543,12 +543,13 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
                   
                     decoration: InputDecoration(
                       hintText: "Search",
-                      hintStyle: TextStyle(color: Theme.of(context).textTheme.headline1.color.withOpacity(.5)),
+                      hintStyle: TextStyle(color: Theme.of(context).textTheme.headline6.color.withOpacity(.5)),
                       border: InputBorder.none
                     ),
                     onChanged: (q) {
                       setState(() {
                         datas = filter(q);
+                       
                       });
                     },
                   ),
@@ -587,6 +588,7 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
             child: ListView.builder(
           padding: EdgeInsets.zero,
           itemBuilder: (context, index) {
+             datas.sort((a,b)=>utils.sortByisDone(a, b));
             Item item = datas[index];
             return Container(
               height: 62,
