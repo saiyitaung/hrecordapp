@@ -103,12 +103,14 @@ class _RecordDetailState extends State<RecordDetail>
 
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Stack(children: [
         Positioned(
           top: 0,
           child: Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
+              color: Theme.of(context).scaffoldBackgroundColor,
               child: FutureBuilder(
                   future: loadBox(),
                   builder: (context, snap) {
@@ -132,13 +134,13 @@ class _RecordDetailState extends State<RecordDetail>
                               child: Row(
                                 children: [
                                   TotalHelpShow(
-                                    color: Colors.white,
+                                    color: Theme.of(context).textTheme.headline1.color,
                                     title: "ႁဝ်းၵႃႇထႅမ်",
                                     totalCount: utils.totalGettingHelp(
                                         snap.data.values.toList()),
                                   ),
                                   TotalHelpShow(
-                                    color: Colors.white,
+                                    color: Theme.of(context).textTheme.headline1.color,                                    
                                     title: "မႃးထႅမ်ႁဝ်း",
                                     totalCount: utils.totalNeedToHelp(
                                         snap.data.values.toList()),
@@ -157,6 +159,7 @@ class _RecordDetailState extends State<RecordDetail>
                             return Container(
                               height: 62,
                               decoration: BoxDecoration(
+                              
                                 boxShadow: [
                                   BoxShadow(
                                       offset: Offset(0.0, .1),
@@ -175,8 +178,8 @@ class _RecordDetailState extends State<RecordDetail>
                                       : item.name.substring(0, 20) + "...",
                                   style: TextStyle(
                                       color: item.isfinished
-                                          ? Colors.black.withOpacity(.5)
-                                          : Colors.black,
+                                          ? Theme.of(context).textTheme.bodyText1.color.withOpacity(.5)
+                                          : Theme.of(context).textTheme.bodyText1.color,
                                       fontSize: 16,
                                       fontWeight: FontWeight.normal,
                                       decoration: item.isfinished
@@ -248,7 +251,7 @@ class _RecordDetailState extends State<RecordDetail>
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color: Colors.teal,
+                      color:Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(10),
                           topLeft: Radius.circular(10)),
@@ -358,7 +361,7 @@ class _RecordDetailState extends State<RecordDetail>
                           onPressed: () {
                             List<Item> itemList = box.values.toList();
 
-                            showDatePicker(
+                            showDatePicker(                              
                                     context: context,
                                     initialDate: DateTime.now(),
                                     firstDate: r.timeStamp,
@@ -429,25 +432,34 @@ class EditRecordPrice extends StatelessWidget {
   EditRecordPrice({this.ctl, this.previousPrice});
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       title: Text("Change price",textAlign: TextAlign.center,),
       content: TextField(
         controller: ctl,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           hintText: "current price is $previousPrice kyats",
+          hintStyle: TextStyle(color: Theme.of(context).textTheme.subtitle1.color.withOpacity(.5)),
         ),
       ),
       actions: [
-        TextButton(
+       Container(
+         width: MediaQuery.of(context).size.width,
+         child: Row(
+           mainAxisAlignment: MainAxisAlignment.spaceAround,
+           children: [
+            TextButton(
             onPressed: () {
               Navigator.pop(context, false);
             },
-            child: Text("Cancel")),
+            child: Text("Cancel",style: TextStyle(color: Colors.red),),),
         TextButton(
             onPressed: () {
               Navigator.pop(context, true);
             },
             child: Text("Update"))
+         ],),
+       )
       ],
     );
   }
@@ -502,10 +514,10 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
                 BoxShadow(
                     offset: Offset(0.0, 2.0),
                     blurRadius: 2.0,
-                    color: Colors.teal)
+                    color: Theme.of(context).primaryColor)
               ],
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(width: 2, color: Colors.teal)),
+              border: Border.all(width: 2, color: Theme.of(context).primaryColor)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -528,8 +540,11 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
                   child: TextField(
                     cursorColor: Colors.teal,
                     style: TextStyle(color: Colors.teal, fontSize: 20),
+                  
                     decoration: InputDecoration(
                       hintText: "Search",
+                      hintStyle: TextStyle(color: Theme.of(context).textTheme.headline1.color.withOpacity(.5)),
+                      border: InputBorder.none
                     ),
                     onChanged: (q) {
                       setState(() {
@@ -593,8 +608,8 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
                       : item.name.substring(0, 20) + "...",
                   style: TextStyle(
                       color: item.isfinished
-                          ? Colors.black.withOpacity(.5)
-                          : Colors.black,
+                          ? Theme.of(context).textTheme.headline6.color.withOpacity(.4)
+                          :Theme.of(context).textTheme.headline6.color,
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
                       decoration:

@@ -25,8 +25,7 @@ class HelpCountList extends StatelessWidget {
           endConnectorBuilder: (context, index) =>
               index == lh.length - 1 ? null : Connector.solidLine(color: Colors.teal,),
           contentsBuilder: (context, index) {
-            return Container(
-              
+            return Container(              
                 child: ListTile(
                   // contentPadding: EdgeInsets.only(top:2,bottom:2),
                   title: Text(
@@ -44,6 +43,7 @@ class HelpCountList extends StatelessWidget {
                               context: context,
                               builder: (context) {
                                 return AlertDialog(
+                                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                                   title: Text(
                                     "${lh[index].detail} ${lh[index].count}",
                                     textAlign: TextAlign.center,

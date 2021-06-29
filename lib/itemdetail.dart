@@ -45,6 +45,10 @@ class _ItemDetailState extends State<ItemDetail> {
       ndetailCtl.text = settings.get("sugarcanedetail") != null
           ? settings.get("sugarcanedetail")
           : "default";
+    }else{
+       ndetailCtl.text = settings.get("regulardetail") != null
+          ? settings.get("regulardetail")
+          : "default";
     }
   }
 
@@ -56,6 +60,7 @@ class _ItemDetailState extends State<ItemDetail> {
     return Scaffold(
       // resizeToAvoidBottomPadding: false,
       //resizeToAvoidBottomInset: false,
+      backgroundColor:Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         title: Text("${item.name}",style: TextStyle(fontSize: 16),),
         actions: [
@@ -140,6 +145,7 @@ class _ItemDetailState extends State<ItemDetail> {
                     child: TotalHelpShow(
                       title: "",
                       totalCount: utils.totalHelpCount(item.needToHelpBack),
+
                     ),
                   )
                 : Container(
@@ -193,7 +199,7 @@ class _ItemDetailState extends State<ItemDetail> {
                                                   "ၼပ်ႉ",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
-                                                      fontSize: 18,                                                      
+                                                      fontSize: 14,                                                      
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )),
@@ -202,16 +208,16 @@ class _ItemDetailState extends State<ItemDetail> {
                                                   "ၵႃႈၶၼ်",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
-                                                      fontSize: 18,
+                                                      fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )),
                                                 Container(
                                                     child: Text(
-                                                  "ၶၼ်ႁပ်ႉတုမ်ႊ",
+                                                  "ၶၼ်ႁုပ်ႉတုမ်ႊ",
                                                   textAlign: TextAlign.center,
                                                   style: TextStyle(
-                                                      fontSize: 18,
+                                                      fontSize: 14,
                                                       fontWeight:
                                                           FontWeight.bold),
                                                 )),
@@ -277,6 +283,7 @@ class _ItemDetailState extends State<ItemDetail> {
                                       )
                                     : null,
                               ),
+                        SizedBox(height: 10,),
                         TextButton(
                           onPressed: item.isfinished || price <= 0
                               ? null
@@ -326,6 +333,7 @@ class _ItemDetailState extends State<ItemDetail> {
                                 borderRadius: BorderRadius.circular(20)),
                           ),
                         ),
+                         SizedBox(height: 10,),
                       ],
                     ),
                   ),

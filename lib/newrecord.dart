@@ -52,6 +52,7 @@ class _NewRecordState extends State<NewRecord> {
                     child: Row(
                       children: [
                         Radio(
+                           fillColor: MaterialStateProperty.resolveWith((states) => Theme.of(context).primaryColor),
                             value: "မႆၢႁႅင်းဝၼ်း",
                             groupValue: selectedItem,
                             onChanged: (v) {
@@ -68,6 +69,7 @@ class _NewRecordState extends State<NewRecord> {
                     child: Row(
                       children: [
                         Radio(
+                           fillColor: MaterialStateProperty.resolveWith((states) => Theme.of(context).primaryColor),
                             value: "မႆၢႁႅင်းလိတ်ႉဢွႆႈ",
                             groupValue: selectedItem,
                             onChanged: (v) {
@@ -130,8 +132,11 @@ class _NewRecordState extends State<NewRecord> {
             ),
             SizedBox(height: 10),
             TextField(
+              style: TextStyle(fontSize: 16),
               decoration: InputDecoration(
                   hintText: "သႂ်ပၼ်ၸိုဝ်ႈ",
+                  labelText: "သႂ်ပၼ်ၸိုဝ်ႈ",
+                   hintStyle: TextStyle(color: Theme.of(context).textTheme.subtitle1.color.withOpacity(.5)),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   )),
@@ -167,7 +172,7 @@ class _NewRecordState extends State<NewRecord> {
                 child: Text(
                   "ႁဵတ်းဢၼ်မႂ်ႇ",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+                  style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
                 width: double.infinity,
                 margin: EdgeInsets.only(left: 10, right: 10),
@@ -176,7 +181,7 @@ class _NewRecordState extends State<NewRecord> {
               // color: Theme.of(context).primaryColor,
               style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateColor.resolveWith((states) => Colors.teal),
+                      MaterialStateColor.resolveWith((states) => Theme.of(context).primaryColor),
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)))),
             )

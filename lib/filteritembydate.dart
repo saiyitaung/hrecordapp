@@ -20,7 +20,7 @@ class FilterItemsByDate extends StatelessWidget {
                 flex: 3,
                 child: Container(
                   child: Text(
-                    "Total count",
+                    "Total Count",
                     // textAlign: TextAlign.end,
                     style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
                   ),

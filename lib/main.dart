@@ -1,6 +1,5 @@
-
-
 import 'package:flutter/material.dart';
+import 'package:hrecord/mytheme/mytheme.dart';
 import 'package:hrecord/scalepageroute.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -30,7 +29,7 @@ void main() async {
   //   SystemNavigator.pop();
   // }
   //const String appDir="/storage/emulated/0/app.saiyi.hrecord";
-  final appDir=await getExternalStorageDirectory();
+  final appDir = await getExternalStorageDirectory();
   // var dir =Directory(appDir.path);
   print(appDir.path);
   await Hive.initFlutter(appDir.path);
@@ -40,48 +39,66 @@ void main() async {
   Hive.registerAdapter(PayAdapter());
   await Hive.openBox<Record>("recordsBox");
   await Hive.openBox("settings");
+  
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  MyAppState createState() => MyAppState();
+}
+
+class MyAppState extends State<MyApp> {
   // This widget is the root of your application.
+  Box settingBox;
+  MyTheme currentTheme;
+  void initState() {
+    settingBox = Hive.box("settings");
+    if(!settingBox.keys.contains("darkMode")){
+      settingBox.put("darkMode", false);
+    }
+    bool isDark=settingBox.get("darkMode");
+    currentTheme=MyTheme(isDark);
+    super.initState();
+    currentTheme.addListener(() {
+      setState(() {
+        
+      });
+    });
+   
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'help records demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.teal,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        scaffoldBackgroundColor: Colors.grey[300],
-        primaryColor: Colors.teal,
-        accentColor: Colors.teal[300],
-        textTheme: Theme.of(context)
-            .primaryTextTheme
-            .apply(displayColor: Colors.black, bodyColor: Colors.black),
-      ),
-      home: MyHomePage(title: 'Records'),
+      theme: MyTheme.lightTheme,
+      darkTheme: MyTheme.darkTheme,
+      themeMode: currentTheme.currentTheme,
+      home: MyHomePage(title: 'Records',currentTheme: currentTheme,),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  final MyTheme currentTheme;
+  MyHomePage({Key key, this.title,this.currentTheme}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState(currentTheme);
 }
 
 class _MyHomePageState extends State<MyHomePage>
     with SingleTickerProviderStateMixin {
+      MyTheme currentTheme;
   AnimationController controller;
   Animation<Offset> sideMenu, slideContain;
   double width, height;
   Animation<double> scaleAni, fadeAni;
   Color white = Colors.white;
-
+  _MyHomePageState(this.currentTheme);
   Box<Record> rBox = Hive.box("recordsBox");
 
   void initState() {
@@ -136,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage>
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(
-      backgroundColor: Colors.teal,
+      backgroundColor: Theme.of(context).primaryColor,
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [
@@ -153,6 +170,7 @@ class _MyHomePageState extends State<MyHomePage>
               height: height,
               width: MediaQuery.of(context).size.width,
               // color: Colors.teal,
+              color: Theme.of(context).primaryColor,
               child: ValueListenableBuilder(
                 valueListenable: rBox.listenable(),
                 builder: (context, Box<Record> box, widget) {
@@ -162,14 +180,14 @@ class _MyHomePageState extends State<MyHomePage>
                   return Container(
                     height: height,
                     width: width,
-                    color:Theme.of(context).scaffoldBackgroundColor,
+                    color: Theme.of(context).scaffoldBackgroundColor,
                     child: Column(
                       children: [
                         Container(
                           width: width,
                           height: 60,
                           decoration: BoxDecoration(
-                            color: Colors.teal,
+                            color: Theme.of(context).primaryColor,
                             boxShadow: <BoxShadow>[
                               BoxShadow(
                                   offset: Offset(0.0, 2),
@@ -192,7 +210,8 @@ class _MyHomePageState extends State<MyHomePage>
                                 child: Text(
                                   "ၽိုၼ်မၢႆ",
                                   style: TextStyle(
-                                      fontSize: 25, color: Colors.white),
+                                    color: Theme.of(context).textTheme.headline1.color,
+                                      fontSize: 18,),
                                 ),
                                 padding: EdgeInsets.only(left: 30, top: 10),
                               )
@@ -234,12 +253,12 @@ class _MyHomePageState extends State<MyHomePage>
                                     ? Text("ႁႅင်းဝၼ်း",
                                         style: TextStyle(
                                             fontSize: 12,
-                                            color: Colors.teal.withOpacity(.5)))
+                                            color:Theme.of(context).textTheme.headline6.color.withOpacity(.4)))
                                     : Text("ႁႅင်းလိတ်ႉဢွႆႈ",
                                         style: TextStyle(
                                             fontSize: 12,
                                             color:
-                                                Colors.teal.withOpacity(.5))),
+                                                Theme.of(context).textTheme.headline6.color.withOpacity(.4))),
                                 subtitle: Text(
                                   "${utils.fmtDate(records[index].timeStamp)}",
                                   style: TextStyle(fontSize: 12),
@@ -280,6 +299,7 @@ class _MyHomePageState extends State<MyHomePage>
                 children: [
                   Card(
                     child: Container(
+                      
                       child: Image(
                         image: AssetImage("img/launchericon.png"),
                         height: 200,
@@ -287,13 +307,13 @@ class _MyHomePageState extends State<MyHomePage>
                         width: 250,
                       ),
                       width: double.infinity,
-                      color: Colors.white,
+                      color: Theme.of(context).accentColor,
                     ),
                     margin: EdgeInsets.all(0),
                   ),
                   ListTile(
                     title: menuItemText("ႁႅင်းလိတ်ႉဢွႆႈ"),
-                    leading: Icon(Icons.notes),
+                    leading: Icon(Icons.notes,color: Theme.of(context).textTheme.headline1.color,),
                     onTap: () {
                       animatedController();
                       filter("မႆၢႁႅင်းလိတ်ႉဢွႆႈ");
@@ -301,7 +321,7 @@ class _MyHomePageState extends State<MyHomePage>
                   ),
                   ListTile(
                     title: menuItemText("ႁႅင်းဝၼ်း"),
-                    leading: Icon(Icons.notes),
+                    leading: Icon(Icons.notes,color: Theme.of(context).textTheme.headline1.color,),
                     onTap: () {
                       animatedController();
                       filter("မႆၢႁႅင်းဝၼ်း");
@@ -309,20 +329,21 @@ class _MyHomePageState extends State<MyHomePage>
                   ),
                   ListTile(
                     title: menuItemText("Setting"),
-                    leading: Icon(Icons.settings),
+                    leading: Icon(Icons.settings,color: Theme.of(context).textTheme.headline1.color,),
                     onTap: () {
-                      route(Settings());
+                      route(Settings(currentTheme));
                       animatedController();
                     },
                   ),
                   ListTile(
                     title: menuItemText("About"),
-                    leading: Icon(Icons.info),
+                    leading: Icon(Icons.info,color: Theme.of(context).textTheme.headline1.color,),
                     onTap: () {
                       animatedController();
                       showDialog(
                           context: context,
                           builder: (context) => AlertDialog(
+                            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                                 title: Text(
                                   "Help Record demo",
                                   textAlign: TextAlign.center,
@@ -333,12 +354,12 @@ class _MyHomePageState extends State<MyHomePage>
                                       child: Text("Close"))
                                 ],
                                 content: Text(
-                                  "version :  1.2.0  \n release in 2021 \n contact me  :  \ntwitter @saiyitaung ",
+                                  "version :  1.4.0  \n release in 2021 \n contact me  :  \nsaiyitaung@gmail.com",
                                   textAlign: TextAlign.center,
                                 ),
                               ));
                     },
-                  ),
+                  ),                  
                 ],
               ),
             ),
@@ -385,7 +406,10 @@ class _MyHomePageState extends State<MyHomePage>
                 // print(records);
               });
             },
-            child: Icon(Icons.add,color: Colors.white,),
+            child: Icon(
+              Icons.add,
+              color: Colors.white,
+            ),
           ),
           margin:
               EdgeInsets.only(right: MediaQuery.of(context).size.width / 2.7),

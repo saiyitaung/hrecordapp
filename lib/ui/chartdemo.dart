@@ -10,9 +10,9 @@ class ChartDemo extends StatelessWidget {
     List<PieChartSectionData> listpie = [];
     listpie.add(
       PieChartSectionData(
-        titleStyle: TextStyle(color: Colors.white),
+        titleStyle: TextStyle(  color: Theme.of(ctx).textTheme.bodyText1.color,),
         value: utils.totalHelpCount(item.needToHelpBack).toDouble(),
-        color: Colors.red,
+        color: Colors.red.withOpacity(.6),
         title: utils.totalHelpCount(item.needToHelpBack) > 0
             ? "${utils.totalHelpCount(item.needToHelpBack)}"
             : "0",
@@ -22,10 +22,10 @@ class ChartDemo extends StatelessWidget {
     listpie.add(
       PieChartSectionData(
         titleStyle: TextStyle(
-          color: Colors.white,
+          color: Theme.of(ctx).textTheme.bodyText1.color,
         ),
         value: utils.totalHelpCount(item.gettingHelp).toDouble(),
-        color: Colors.green,
+        color: Colors.green.withOpacity(.6),
         title: utils.totalHelpCount(item.gettingHelp) > 0
             ? "${utils.totalHelpCount(item.gettingHelp)} "
             : "0",

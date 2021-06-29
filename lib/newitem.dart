@@ -46,9 +46,12 @@ class _NewItemState extends State<NewItem> {
           children: [
             TextField(
               controller: nameCtl,
+              style: TextStyle(fontSize: 16),
               //focusNode: FocusScope.of(context),
               decoration: InputDecoration(
                   hintText: "ၸိုဝ်ႈ",
+                  labelText:  "ၸိုဝ်ႈ",
+                  hintStyle: TextStyle(color: Theme.of(context).textTheme.subtitle1.color.withOpacity(.5)),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10))),
             ),
@@ -69,7 +72,9 @@ class _NewItemState extends State<NewItem> {
                               setState(() {
                                 selecteditem = v;
                               });
-                            }),
+                            },
+                            fillColor: MaterialStateProperty.resolveWith((states) => Theme.of(context).primaryColor),
+                            ),
                         Text(
                           "မႃးထႅမ်ႁဝ်း",
                           style: TextStyle(
@@ -84,6 +89,7 @@ class _NewItemState extends State<NewItem> {
                     child: Row(
                       children: [
                         Radio(
+                           fillColor: MaterialStateProperty.resolveWith((states) => Theme.of(context).primaryColor),
                             value: "ႁဝ်းၵႃႇထႅမ်",
                             groupValue: selecteditem,
                             onChanged: (v) {
@@ -145,8 +151,10 @@ class _NewItemState extends State<NewItem> {
               // ),
             ),
             TextField(
+              style: TextStyle(fontSize: 14),
               decoration: InputDecoration(
                   hintText: "လွင်ႈ/ဢွင်ႈတီႈ",
+                  labelText: "လွင်ႈ/ဢွင်ႈတီႈ",
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10))),
               controller: detailCtl,
@@ -156,7 +164,8 @@ class _NewItemState extends State<NewItem> {
             ),
             TextField(
               decoration: InputDecoration(
-                  hintText: "1",
+                  hintText: "1",                  
+                   hintStyle: TextStyle(color: Theme.of(context).textTheme.subtitle1.color.withOpacity(.5)),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10))),
               keyboardType: TextInputType.number,
@@ -228,16 +237,16 @@ class _NewItemState extends State<NewItem> {
               },
               child: Container(
                 child: Text(
-                  " ႁဵတ်းဢၼ်မႂ်ႇ",
+                  "မၢႆသႂ်ႇ",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+                  style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
                 width: double.infinity,
                 // padding: EdgeInsets.only(top: 3, bottom: 3),
               ),
               style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateColor.resolveWith((states) => Colors.teal),
+                      MaterialStateColor.resolveWith((states) => Theme.of(context).primaryColor),
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)))),
             ),

@@ -25,61 +25,74 @@ class HelpDetail extends StatelessWidget {
       this.hheight});
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Colors.grey[300], boxShadow: [
-        BoxShadow(
-            offset: Offset(0.0, 0.0), color: Colors.black87, blurRadius: .2)
-      ]),
+      decoration: BoxDecoration(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          boxShadow: [
+            BoxShadow(
+                offset: Offset(0.0, 0.0), color: Colors.black87, blurRadius: .2)
+          ]),
       height: hheight == null ? 300 : hheight,
       width: wwidth == null ? MediaQuery.of(context).size.width / 2 : wwidth,
       child: Column(children: [
-        !isFinished ?Container(
-          
-          child: ExpansionTile(           
-            title: Text(
-              "ထႅမ်သႂ်ႇထႅင်ႈ",
-            ),
-            children: [
-              TextFormField(
-                keyboardType: TextInputType.text,
-                showCursor: true,
-                decoration: InputDecoration(
-                  hintText: "လွင်ႈတၢင်း/ဢွင်ႈ/ၸိုဝ်ႈ",
-                  contentPadding: EdgeInsets.only(left: 10),
-                ),
-                controller: callBackDetailController,
-                style: TextStyle(fontSize: 18),
-              ),
-              TextFormField(
-                controller: callBackCountController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                    hintText: "1", contentPadding: EdgeInsets.only(left: 10)),
-                maxLength: price > 1000 ? 1 : 3,
-              ),
-              Container(
-                child: TextButton(
-                  onPressed: isFinished ? null : callBackFunc,
-                  style: TextButton.styleFrom(
-                    shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(50)),
+        !isFinished
+            ? Container(
+                child: ExpansionTile(
+                  textColor: Theme.of(context).primaryColor,
+                  iconColor: Theme.of(context).primaryColor,
+                  collapsedIconColor: Theme.of(context).textTheme.headline6.color,
+                  title: Text(
+                    "ထႅမ်သႂ်ႇထႅင်ႈ",
                   ),
-                  child: Text(
-                    "ထႅင်သႂ်ႇ",
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  children: [
+                    TextFormField(
+                      keyboardType: TextInputType.text,
+                      
+                      showCursor: true,
+                      decoration: InputDecoration(
+                        hintText: "လွင်ႈတၢင်း/ဢွင်ႈ/ၸိုဝ်ႈ",
+                        hintStyle: TextStyle(fontSize: 12,color: Theme.of(context).textTheme.headline6.color.withOpacity(.4)),
+                        contentPadding: EdgeInsets.only(left: 10),
+                      ),
+                      controller: callBackDetailController,
+                      style: TextStyle(fontSize: 13),
+                    ),
+                    TextFormField(
+                      controller: callBackCountController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                          hintText: "1",
+                          hintStyle: TextStyle(color:  Theme.of(context).textTheme.headline6.color.withOpacity(.4)),
+                          contentPadding: EdgeInsets.only(left: 10)),
+                      maxLength: price > 1000 ? 1 : 3,
+                    ),
+                    Container(
+                      child: TextButton(
+                        onPressed: isFinished ? null : callBackFunc,
+                        style: TextButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(50)),
+                        ),
+                        child: Text(
+                          "ထႅမ်သႂ်ႇ",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  ],
                 ),
-                width: double.infinity,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(50),
+                  color: Theme.of(context).scaffoldBackgroundColor,
                 ),
+                margin: EdgeInsets.only(left: 2, right: 2),
+              )
+            : Container(
+                height: 10,
               ),
-            ],
-          ),
-          decoration: BoxDecoration(
-            color:Theme.of(context).scaffoldBackgroundColor,            
-          ),
-          margin: EdgeInsets.only(left: 2, right: 2),
-        ):Container(height: 10,),
         Text(
           title,
           style: TextStyle(

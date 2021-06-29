@@ -53,7 +53,7 @@ class PaidChart extends StatelessWidget {
                                   titleStyle: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold),
-                                  color: Colors.red,
+                                  color: Colors.red.withOpacity(.7),
                                   radius: 80,
                                   // titlePositionPercentageOffset: 3,
                                   title:
@@ -64,7 +64,7 @@ class PaidChart extends StatelessWidget {
                                   titleStyle: TextStyle(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold),
-                                  color: Colors.green,
+                                  color: Colors.green.withOpacity(.7),
                                   radius: 80,
                                   // titlePositionPercentageOffset: 3,
                                   title:
@@ -82,7 +82,7 @@ class PaidChart extends StatelessWidget {
                   builder: (context, ctl) {
                     return Container(
                       decoration: BoxDecoration(
-                          color: Colors.grey[100],
+                          color: Theme.of(context).scaffoldBackgroundColor,
                           boxShadow: [
                             BoxShadow(
                                 offset: Offset(0.0, -1.0),
@@ -147,6 +147,7 @@ class PaidChart extends StatelessWidget {
                             controller: paidItem(items).length > 4 ? ctl : null,
                             itemBuilder: (context, index) => Container(
                               child: ListTile(
+                               
                                 //  tileColor: Colors.black12,
                                 leading: Text("${index + 1}"),
                                 title: Text(
@@ -164,7 +165,7 @@ class PaidChart extends StatelessWidget {
                                 ),
                               ),
                               decoration: BoxDecoration(
-                                color: Colors.grey[100],
+                                color: Theme.of(context).scaffoldBackgroundColor,
                                 boxShadow: [
                                   BoxShadow(
                                       offset: Offset(0.0, 0.0),

@@ -6,6 +6,7 @@ class ConfirmDialog extends StatelessWidget {
   ConfirmDialog({this.name, this.content});
   Widget build(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       title: Text(
         "$name",
         textAlign: TextAlign.center,
