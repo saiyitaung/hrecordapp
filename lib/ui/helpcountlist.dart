@@ -50,19 +50,24 @@ class HelpCountList extends StatelessWidget {
                                     style: TextStyle(color: Colors.red),
                                   ),
                                   content:
-                                      Text("Are you sure you want to Delete?"),
+                                      Text("တေၽႅတ်ႈတေႉႁႃႉ?"),
                                   actions: [
-                                    TextButton(
+                                   Container(
+                                     width: MediaQuery.of(context).size.width,
+                                     child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly,children: [
+                                        TextButton(
                                       onPressed: () {
                                         Navigator.pop(context, false);
                                       },
-                                      child: Text("Cancel"),
+                                      child: Text( "ဢမ်ႇ"),
                                     ),
                                     TextButton(
                                         onPressed: () {
                                           Navigator.pop(context, true);
                                         },
-                                        child: Text("Delete",style: TextStyle(color: Colors.red),))
+                                        child: Text("တေႉယဝ်ႉ",style: TextStyle(color: Colors.red),))
+                                     ],),
+                                   )
                                   ],
                                 );
                               }).then((value) {

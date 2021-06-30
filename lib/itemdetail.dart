@@ -78,7 +78,7 @@ class _ItemDetailState extends State<ItemDetail> {
                           builder: (context) {
                             return ConfirmDialog(
                               name: "Delete ${item.name}",
-                              content: "Are you sure?",
+                              content: "တေၽႅတ်ႈတေႉႁႃႉ?",
                             );
                           }).then((value) {
                         if (value == true) {
@@ -188,94 +188,157 @@ class _ItemDetailState extends State<ItemDetail> {
                                       width: MediaQuery.of(context).size.width,
                                       height: 60,
                                       // color: Colors.black12,
-                                      child: Column(
+                                      child: Table(
                                         children: [
-                                          Flexible(
-                                            child: Container(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Container(
-                                                      child: Text(
-                                                    "ၼပ်ႉ",
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
-                                                  Container(
-                                                      child: Text(
-                                                    "ၵႃႈၶၼ်",
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
-                                                  Container(
-                                                      child: Text(
-                                                    "ၶၼ်ႁုပ်ႉတုမ်ႊ",
-                                                    textAlign: TextAlign.center,
-                                                    style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
-                                                ],
+                                          TableRow(children: [
+                                            Container(
+                                                child: Text(
+                                              "ၼပ်ႉ",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                            Container(
+                                                child: Text(
+                                              "ၵႃႈၶၼ်",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                            Container(
+                                                child: Text(
+                                              "ၶၼ်ႁုပ်ႉတုမ်ႊ",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
+                                          ]),
+                                          TableRow(children: [
+                                            Container(
+                                                child: Text(
+                                              utils.subHelpCount(item) < 0
+                                                  ? "${-utils.subHelpCount(item)}"
+                                                  : "${utils.subHelpCount(item)}",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(fontSize: 20),
+                                            )),
+                                            Container(
+                                              child: Text(
+                                                item.isfinished
+                                                    ? "${item.paid.price / item.paid.count}"
+                                                    : "$price",
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(fontSize: 20),
                                               ),
                                             ),
-                                          ),
-                                          Flexible(
-                                            child: Container(
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Container(
-                                                      child: Text(
-                                                    utils.subHelpCount(item) < 0
-                                                        ? "${-utils.subHelpCount(item)}"
-                                                        : "${utils.subHelpCount(item)}",
-                                                    textAlign: TextAlign.center,
-                                                    style:
-                                                        TextStyle(fontSize: 20),
-                                                  )),
-                                                  Container(
-                                                    child: Text(
-                                                      item.isfinished
-                                                          ? "${item.paid.price / item.paid.count}"
-                                                          : "$price",
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style: TextStyle(
-                                                          fontSize: 20),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                      child: Text(
-                                                    item.isfinished
-                                                        ? "${item.paid.price}"
-                                                        : utils.pay(
-                                                                    item,
-                                                                    price
-                                                                        .toDouble()) <
-                                                                0
-                                                            ? "${-utils.pay(item, price.toDouble())}"
-                                                            : "${utils.pay(item, price.toDouble())}",
-                                                    textAlign: TextAlign.center,
-                                                    style:
-                                                        TextStyle(fontSize: 20),
-                                                  )),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
+                                            Container(
+                                                child: Text(
+                                              item.isfinished
+                                                  ? "${item.paid.price}"
+                                                  : utils.pay(
+                                                              item,
+                                                              price
+                                                                  .toDouble()) <
+                                                          0
+                                                      ? "${-utils.pay(item, price.toDouble())}"
+                                                      : "${utils.pay(item, price.toDouble())}",
+                                              textAlign: TextAlign.center,
+                                              style: TextStyle(fontSize: 20),
+                                            )),
+                                          ]),
                                         ],
                                       ),
+                                      // child: Column(
+                                      //   children: [
+                                      //     Flexible(
+                                      //       child: Container(
+                                      //         child: Row(
+                                      //           mainAxisAlignment:
+                                      //               MainAxisAlignment
+                                      //                   .spaceBetween,
+                                      //           children: [
+                                      //             Container(
+                                      //                 child: Text(
+                                      //               "ၼပ်ႉ",
+                                      //               textAlign: TextAlign.center,
+                                      //               style: TextStyle(
+                                      //                   fontSize: 14,
+                                      //                   fontWeight:
+                                      //                       FontWeight.bold),
+                                      //             )),
+                                      //             Container(
+                                      //                 child: Text(
+                                      //               "ၵႃႈၶၼ်",
+                                      //               textAlign: TextAlign.center,
+                                      //               style: TextStyle(
+                                      //                   fontSize: 14,
+                                      //                   fontWeight:
+                                      //                       FontWeight.bold),
+                                      //             )),
+                                      //             Container(
+                                      //                 child: Text(
+                                      //               "ၶၼ်ႁုပ်ႉတုမ်ႊ",
+                                      //               textAlign: TextAlign.center,
+                                      //               style: TextStyle(
+                                      //                   fontSize: 14,
+                                      //                   fontWeight:
+                                      //                       FontWeight.bold),
+                                      //             )),
+                                      //           ],
+                                      //         ),
+                                      //       ),
+                                      //     ),
+                                      //     Flexible(
+                                      //       child: Container(
+                                      //         child: Row(
+                                      //           mainAxisAlignment:
+                                      //               MainAxisAlignment
+                                      //                   .spaceBetween,
+                                      //           children: [
+                                      //             Container(
+                                      //                 child: Text(
+                                      //               utils.subHelpCount(item) < 0
+                                      //                   ? "${-utils.subHelpCount(item)}"
+                                      //                   : "${utils.subHelpCount(item)}",
+                                      //               textAlign: TextAlign.center,
+                                      //               style:
+                                      //                   TextStyle(fontSize: 20),
+                                      //             )),
+                                      //             Container(
+                                      //               child: Text(
+                                      //                 item.isfinished
+                                      //                     ? "${item.paid.price / item.paid.count}"
+                                      //                     : "$price",
+                                      //                 textAlign:
+                                      //                     TextAlign.center,
+                                      //                 style: TextStyle(
+                                      //                     fontSize: 20),
+                                      //               ),
+                                      //             ),
+                                      //             Container(
+                                      //                 child: Text(
+                                      //               item.isfinished
+                                      //                   ? "${item.paid.price}"
+                                      //                   : utils.pay(
+                                      //                               item,
+                                      //                               price
+                                      //                                   .toDouble()) <
+                                      //                           0
+                                      //                       ? "${-utils.pay(item, price.toDouble())}"
+                                      //                       : "${utils.pay(item, price.toDouble())}",
+                                      //               textAlign: TextAlign.center,
+                                      //               style:
+                                      //                   TextStyle(fontSize: 20),
+                                      //             )),
+                                      //           ],
+                                      //         ),
+                                      //       ),
+                                      //     ),
+                                      //   ],
+                                      // ),
                                     ),
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 10),

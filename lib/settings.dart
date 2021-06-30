@@ -51,7 +51,7 @@ class _SettingState extends State<Settings> {
                   width: (MediaQuery.of(context).size.width / 100) * 60,
                   child: Text(
                     "Dark Mode",
-                    style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
                 ),
                 Container(
@@ -188,20 +188,28 @@ class EditDefaultPrice extends StatelessWidget {
         ),
       ),
       actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context, false);
-          },
-          child: Text(
-            "ဢမ်ႇ",
-            style: TextStyle(color: Colors.red),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context, false);
+                },
+                child: Text(
+                  "ဢမ်ႇသႂ်ႇ",
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context, true);
+                  },
+                  child: Text("သႂ်ႇဝႆႉ")),
+            ],
           ),
-        ),
-        TextButton(
-            onPressed: () {
-              Navigator.pop(context, true);
-            },
-            child: Text("တူၵ်းလူင်း")),
+        )
       ],
     );
   }
@@ -232,20 +240,26 @@ class EditDefaultDetail extends StatelessWidget {
         keyboardType: TextInputType.name,
       ),
       actions: [
-        TextButton(
-          onPressed: () {
-            Navigator.pop(context, false);
-          },
-          child: Text(
-            "ဢမ်ႇ",
-            style: TextStyle(color: Colors.red),
-          ),
-        ),
-        TextButton(
-            onPressed: () {
-              Navigator.pop(context, true);
-            },
-            child: Text("တူၵ်းလူင်း")),
+        Container(
+            width: MediaQuery.of(context).size.width,
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context, false);
+                    },
+                    child: Text(
+                      "ဢမ်ႇသႂ်ႇ",
+                      style: TextStyle(color: Colors.red),
+                    ),
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context, true);
+                      },
+                      child: Text("သႂ်ႇဝႆႉ")),
+                ])),
       ],
     );
   }

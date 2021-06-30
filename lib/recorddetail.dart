@@ -389,7 +389,7 @@ class _RecordDetailState extends State<RecordDetail>
                             showDialog(
                                     builder: (context) => ConfirmDialog(
                                           name: "Delete ${r.name}",
-                                          content: "Are you sure?",
+                                          content: "တေၽႅတ်ႈတေႉႁႃႉ?",
                                         ),
                                     context: context)
                                 .then((value) {
@@ -433,7 +433,7 @@ class EditRecordPrice extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      title: Text("Change price",textAlign: TextAlign.center,),
+      title: Text("လႅၵ်ႈလၢႆႈၵႃႈၶၼ်?",textAlign: TextAlign.center,),
       content: TextField(
         controller: ctl,
         keyboardType: TextInputType.number,
@@ -452,12 +452,12 @@ class EditRecordPrice extends StatelessWidget {
             onPressed: () {
               Navigator.pop(context, false);
             },
-            child: Text("Cancel",style: TextStyle(color: Colors.red),),),
+            child: Text("ဢမ်ႇယဝ်ႉ",style: TextStyle(color: Colors.red),),),
         TextButton(
             onPressed: () {
               Navigator.pop(context, true);
             },
-            child: Text("Update"))
+            child: Text("တေႉယဝ်ႉ"))
          ],),
        )
       ],

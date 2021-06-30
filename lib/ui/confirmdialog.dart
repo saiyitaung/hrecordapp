@@ -35,7 +35,7 @@ class ConfirmDialog extends StatelessWidget {
               Navigator.pop(context, true);
             },
             child: Text(
-              "တူၵ်းလူင်း",
+              "တေႉယဝ်ႉ",
               style: TextStyle(color: Colors.green),
             )),),
       ],
