@@ -1,8 +1,9 @@
 //import 'dart:html';
 
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
-import 'package:hrecord/scalepageroute.dart';
+import 'package:hrecord/fadepageroute.dart';
 import './filteritembydate.dart';
 // import 'package:hive_flutter/hive_flutter.dart';
 
@@ -88,7 +89,7 @@ class _RecordDetailState extends State<RecordDetail>
   }
 
   Future<dynamic> route(Widget child) {
-    return Navigator.of(context).push(ScalePageRoute(child: child));
+    return Navigator.of(context).push(FadePageRoute(child: child));
   }
 
   List<Item> filterSearch(String q) {
@@ -134,13 +135,19 @@ class _RecordDetailState extends State<RecordDetail>
                               child: Row(
                                 children: [
                                   TotalHelpShow(
-                                    color: Theme.of(context).textTheme.headline1.color,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .headline1
+                                        .color,
                                     title: "ႁဝ်းၵႃႇထႅမ်",
                                     totalCount: utils.totalGettingHelp(
                                         snap.data.values.toList()),
                                   ),
                                   TotalHelpShow(
-                                    color: Theme.of(context).textTheme.headline1.color,                                    
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .headline1
+                                        .color,
                                     title: "မႃးထႅမ်ႁဝ်း",
                                     totalCount: utils.totalNeedToHelp(
                                         snap.data.values.toList()),
@@ -157,79 +164,114 @@ class _RecordDetailState extends State<RecordDetail>
                             items.sort((a, b) => utils.sortByisDone(a, b));
                             Item item = items[index];
                             return Container(
-                              height: 62,
-                              decoration: BoxDecoration(
-                              
-                                boxShadow: [
-                                  BoxShadow(
-                                      offset: Offset(0.0, .1),
-                                      color: Colors.black,
-                                      blurRadius: .5)
-                                ],
-                                color:Theme.of(context).scaffoldBackgroundColor,
-                              ),
-                              child: ListTile(
-                                contentPadding: EdgeInsets.all(6),
-                                dense: true,
-                                leading: Text("${index + 1}"),
-                                title: Text(
-                                  item.name.length < 15
-                                      ? item.name
-                                      : item.name.substring(0, 20) + "...",
-                                  style: TextStyle(
-                                      color: item.isfinished
-                                          ? Theme.of(context).textTheme.bodyText1.color.withOpacity(.5)
-                                          : Theme.of(context).textTheme.bodyText1.color,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.normal,
-                                      decoration: item.isfinished
-                                          ? TextDecoration.lineThrough
-                                          : null),
+                                height: 62,
+                                decoration: BoxDecoration(
+                                  boxShadow: [
+                                    BoxShadow(
+                                        offset: Offset(0.0, .1),
+                                        color: Colors.black,
+                                        blurRadius: .5)
+                                  ],
+                                  color:
+                                      Theme.of(context).scaffoldBackgroundColor,
                                 ),
-                                trailing: Container(
-                                  width: 80,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      ShowCount(
-                                          color: green,
-                                          count: utils
-                                              .totalHelpCount(item.gettingHelp),
-                                          isfinished: item.isfinished),
-                                      Text("|"),
-                                      ShowCount(
-                                        color: red,
-                                        isfinished: item.isfinished,
-                                        count: utils.totalHelpCount(
-                                            item.needToHelpBack),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  "${utils.fmtDate(item.created)}",
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                                onTap: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ItemDetail(
-                                              price: r.price,
-                                              recordId: r.id,
-                                              itemId: item.id,
-                                            ))).then((value) {
-                                  // Item foundItem = find(value, people);
-                                  // closeSearchPageIfOpen();
-                                  if (value != null) {
-                                    box.delete(value);
-                                    setState(() {});
-                                  } else {
-                                    setState(() {});
-                                  }
-                                }),
-                              ),
-                            );
+                                child: OpenContainer<String>(
+                                    transitionDuration:
+                                        Duration(milliseconds: 350),
+                                    transitionType:
+                                        ContainerTransitionType.fade,
+                                    closedColor: Theme.of(context)
+                                        .scaffoldBackgroundColor,
+                                    onClosed: (itemId) {
+                                      if (itemId != null) {
+                                        print(" delete item $itemId");
+                                        if (itemId != null) {
+                                          box.delete(itemId);
+                                          setState(() {});
+                                        } else {
+                                          setState(() {});
+                                        }
+                                      }
+                                    },
+                                    closedElevation: 0,
+                                    closedBuilder: (context, closeContainer) {
+                                      return ListTile(
+                                        contentPadding: EdgeInsets.all(6),
+                                        dense: true,
+                                        leading: Text("${index + 1}"),
+                                        title: Text(
+                                          item.name.length < 15
+                                              ? item.name
+                                              : item.name.substring(0, 20) +
+                                                  "...",
+                                          style: TextStyle(
+                                              color: item.isfinished
+                                                  ? Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1
+                                                      .color
+                                                      .withOpacity(.5)
+                                                  : Theme.of(context)
+                                                      .textTheme
+                                                      .bodyText1
+                                                      .color,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.normal,
+                                              decoration: item.isfinished
+                                                  ? TextDecoration.lineThrough
+                                                  : null),
+                                        ),
+                                        trailing: Container(
+                                          width: 80,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              ShowCount(
+                                                  color: green,
+                                                  count: utils.totalHelpCount(
+                                                      item.gettingHelp),
+                                                  isfinished: item.isfinished),
+                                              Text("|"),
+                                              ShowCount(
+                                                color: red,
+                                                isfinished: item.isfinished,
+                                                count: utils.totalHelpCount(
+                                                    item.needToHelpBack),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        subtitle: Text(
+                                          "${utils.fmtDate(item.created)}",
+                                          style: TextStyle(fontSize: 14),
+                                        ),
+                                        // onTap: () => Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) => ItemDetail(
+                                        //               price: r.price,
+                                        //               recordId: r.id,
+                                        //               itemId: item.id,
+                                        //             ))).then((value) {
+                                        //   // Item foundItem = find(value, people);
+                                        //   // closeSearchPageIfOpen();
+                                        //   if (value != null) {
+                                        //     box.delete(value);
+                                        //     setState(() {});
+                                        //   } else {
+                                        //     setState(() {});
+                                        //   }
+                                        // }),
+                                      );
+                                    },
+                                    openBuilder: (context, openContainer) {
+                                      return ItemDetail(
+                                        price: r.price,
+                                        recordId: r.id,
+                                        itemId: item.id,
+                                      );
+                                    }));
                           }, childCount: box.values.length))
                         ],
                       );
@@ -251,7 +293,7 @@ class _RecordDetailState extends State<RecordDetail>
                   child: Container(
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(
-                      color:Theme.of(context).primaryColor,
+                      color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.only(
                           topRight: Radius.circular(10),
                           topLeft: Radius.circular(10)),
@@ -297,7 +339,7 @@ class _RecordDetailState extends State<RecordDetail>
                                 .then((value) {
                               if (value != null) {
                                 if (value == "createNew") {
-                                 // print("need to create new ");
+                                  // print("need to create new ");
                                   route(NewItem(
                                     record: r,
                                   )).then((value) {
@@ -361,7 +403,7 @@ class _RecordDetailState extends State<RecordDetail>
                           onPressed: () {
                             List<Item> itemList = box.values.toList();
 
-                            showDatePicker(                              
+                            showDatePicker(
                                     context: context,
                                     initialDate: DateTime.now(),
                                     firstDate: r.timeStamp,
@@ -433,33 +475,43 @@ class EditRecordPrice extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      title: Text("လႅၵ်ႈလၢႆႈၵႃႈၶၼ်?",textAlign: TextAlign.center,),
+      title: Text(
+        "လႅၵ်ႈလၢႆႈၵႃႈၶၼ်?",
+        textAlign: TextAlign.center,
+      ),
       content: TextField(
         controller: ctl,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           hintText: "current price is $previousPrice kyats",
-          hintStyle: TextStyle(color: Theme.of(context).textTheme.subtitle1.color.withOpacity(.5)),
+          hintStyle: TextStyle(
+              color:
+                  Theme.of(context).textTheme.subtitle1.color.withOpacity(.5)),
         ),
       ),
       actions: [
-       Container(
-         width: MediaQuery.of(context).size.width,
-         child: Row(
-           mainAxisAlignment: MainAxisAlignment.spaceAround,
-           children: [
-            TextButton(
-            onPressed: () {
-              Navigator.pop(context, false);
-            },
-            child: Text("ဢမ်ႇယဝ်ႉ",style: TextStyle(color: Colors.red),),),
-        TextButton(
-            onPressed: () {
-              Navigator.pop(context, true);
-            },
-            child: Text("တေႉယဝ်ႉ"))
-         ],),
-       )
+        Container(
+          width: MediaQuery.of(context).size.width,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context, false);
+                },
+                child: Text(
+                  "ဢမ်ႇယဝ်ႉ",
+                  style: TextStyle(color: Colors.red),
+                ),
+              ),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context, true);
+                  },
+                  child: Text("တေႉယဝ်ႉ"))
+            ],
+          ),
+        )
       ],
     );
   }
@@ -506,10 +558,9 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
         Container(
           margin: EdgeInsets.only(top: 20),
           width: MediaQuery.of(context).size.width,
-         
           height: 60,
           decoration: BoxDecoration(
-              color:Theme.of(context).scaffoldBackgroundColor,
+              color: Theme.of(context).scaffoldBackgroundColor,
               boxShadow: [
                 BoxShadow(
                     offset: Offset(0.0, 2.0),
@@ -517,14 +568,14 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
                     color: Theme.of(context).primaryColor)
               ],
               borderRadius: BorderRadius.circular(10),
-              border: Border.all(width: 2, color: Theme.of(context).primaryColor)),
+              border:
+                  Border.all(width: 2, color: Theme.of(context).primaryColor)),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Flexible(
                 flex: 1,
                 child: Container(
-                  
                   padding: EdgeInsets.only(top: 10, left: 10, right: 2),
                   child: Icon(
                     Icons.search,
@@ -536,20 +587,21 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
               Flexible(
                 flex: 5,
                 child: Container(
-                  
                   child: TextField(
                     cursorColor: Colors.teal,
                     style: TextStyle(color: Colors.teal, fontSize: 20),
-                  
                     decoration: InputDecoration(
-                      hintText: "Search",
-                      hintStyle: TextStyle(color: Theme.of(context).textTheme.headline6.color.withOpacity(.5)),
-                      border: InputBorder.none
-                    ),
+                        hintText: "Search",
+                        hintStyle: TextStyle(
+                            color: Theme.of(context)
+                                .textTheme
+                                .headline6
+                                .color
+                                .withOpacity(.5)),
+                        border: InputBorder.none),
                     onChanged: (q) {
                       setState(() {
                         datas = filter(q);
-                       
                       });
                     },
                   ),
@@ -588,7 +640,7 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
             child: ListView.builder(
           padding: EdgeInsets.zero,
           itemBuilder: (context, index) {
-             datas.sort((a,b)=>utils.sortByisDone(a, b));
+            datas.sort((a, b) => utils.sortByisDone(a, b));
             Item item = datas[index];
             return Container(
               height: 62,
@@ -599,7 +651,7 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
                       color: Colors.black,
                       blurRadius: .5)
                 ],
-              color:Theme.of(context).scaffoldBackgroundColor,
+                color: Theme.of(context).scaffoldBackgroundColor,
               ),
               child: ListTile(
                 dense: true,
@@ -610,8 +662,12 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
                       : item.name.substring(0, 20) + "...",
                   style: TextStyle(
                       color: item.isfinished
-                          ? Theme.of(context).textTheme.headline6.color.withOpacity(.4)
-                          :Theme.of(context).textTheme.headline6.color,
+                          ? Theme.of(context)
+                              .textTheme
+                              .headline6
+                              .color
+                              .withOpacity(.4)
+                          : Theme.of(context).textTheme.headline6.color,
                       fontSize: 16,
                       fontWeight: FontWeight.normal,
                       decoration:
