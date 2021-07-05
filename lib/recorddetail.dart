@@ -483,7 +483,7 @@ class EditRecordPrice extends StatelessWidget {
         controller: ctl,
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
-          hintText: "current price is $previousPrice kyats",
+          hintText: "ၵႃႈၶၼ်ယၢမ်းလဵဝ် $previousPrice kyats",
           hintStyle: TextStyle(
               color:
                   Theme.of(context).textTheme.subtitle1.color.withOpacity(.5)),

@@ -26,7 +26,9 @@ class MyTheme with ChangeNotifier {
 
   static ThemeData get darkTheme {
     return ThemeData(
+      primarySwatch: Colors.blueGrey,
       primaryColor: Colors.grey[900],
+      visualDensity: VisualDensity.adaptivePlatformDensity,
       accentColor: Colors.grey[800],
       scaffoldBackgroundColor: Colors.grey[800],
       textTheme: TextTheme(

@@ -446,7 +446,7 @@ class _MyHomePageState extends State<MyHomePage>
                                       child: Text("Close"))
                                 ],
                                 content: Text(
-                                  "version     : 1.6.0  \nrelease in : Jun 30,2021 \nI hope my app will help to solve some of our daily problem for recording helping each other.If you have any problem with the app ,please contact me  saiyitaung@gmail.com .\nThank you for using my app :-)",
+                                  "version     : 1.6.0  \nrelease in : July 5,2021 \nI hope my app will help to solve some of our daily problem for recording helping each other.If you have any problem with the app ,please contact me  saiyitaung@gmail.com .\nThank you for using my app :-)",
                                   // textAlign: TextAlign.center,
                                 ),
                               ));
