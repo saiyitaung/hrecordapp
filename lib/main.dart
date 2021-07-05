@@ -410,7 +410,13 @@ class _MyHomePageState extends State<MyHomePage>
           // ),
         ],
       ),
-      floatingActionButton: Container(
+      floatingActionButton:AnimatedBuilder(
+        animation: controller,
+        builder: (context, child) {
+          return FadeTransition(opacity: fadeAni, child: child);
+        },
+        child:
+       Container(
         margin: EdgeInsets.only(
             right: (MediaQuery.of(context).size.width / 100) * 40),
         child: OpenContainer<Record>(
@@ -443,7 +449,7 @@ class _MyHomePageState extends State<MyHomePage>
             openBuilder: (context, openContainer) {
               return NewRecord();
             }),
-      ),
+      ),),
       // floatingActionButton: AnimatedBuilder(
       //   animation: controller,
       //   builder: (context, child) {
