@@ -196,11 +196,12 @@ class _RecordDetailState extends State<RecordDetail>
                                     closedElevation: 0,
                                     closedBuilder: (context, closeContainer) {
                                       return ListTile(
+                                        tileColor: Theme.of(context).scaffoldBackgroundColor,
                                         contentPadding: EdgeInsets.all(6),
                                         dense: true,
                                         leading: Text("${index + 1}"),
                                         title: Text(
-                                          item.name.length < 15
+                                          item.name.length < 20
                                               ? item.name
                                               : item.name.substring(0, 20) +
                                                   "...",
@@ -245,24 +246,7 @@ class _RecordDetailState extends State<RecordDetail>
                                         subtitle: Text(
                                           "${utils.fmtDate(item.created)}",
                                           style: TextStyle(fontSize: 14),
-                                        ),
-                                        // onTap: () => Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) => ItemDetail(
-                                        //               price: r.price,
-                                        //               recordId: r.id,
-                                        //               itemId: item.id,
-                                        //             ))).then((value) {
-                                        //   // Item foundItem = find(value, people);
-                                        //   // closeSearchPageIfOpen();
-                                        //   if (value != null) {
-                                        //     box.delete(value);
-                                        //     setState(() {});
-                                        //   } else {
-                                        //     setState(() {});
-                                        //   }
-                                        // }),
+                                        ),                                       
                                       );
                                     },
                                     openBuilder: (context, openContainer) {
@@ -657,7 +641,7 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
                 dense: true,
                 leading: Text("${index + 1}"),
                 title: Text(
-                  item.name.length < 15
+                  item.name.length < 20
                       ? item.name
                       : item.name.substring(0, 20) + "...",
                   style: TextStyle(

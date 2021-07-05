@@ -294,56 +294,7 @@ class _MyHomePageState extends State<MyHomePage>
                                 );
                               }, openBuilder: (context, openContainer) {
                                 return RecordDetail(r: records[index]);
-                              });
-                              // return ListTile(
-                              //   title: Text(
-                              //     "${records[index].name}",
-                              //     style: TextStyle(fontSize: 16),
-                              //   ),
-                              //   onTap: () {
-                              //     route(RecordDetail(r: records[index]))
-                              //         .then((value) {
-                              //       if (value != null) {
-                              //         rBox.delete(value);
-                              //       }
-                              //     });
-                              //   },
-                              //   leading: Container(
-                              //     width: 45,
-                              //     height: 45,
-                              //     child: Image(
-                              //       fit: BoxFit.scaleDown,
-                              //       image: AssetImage("img/file.png"),
-                              //     ),
-                              //   ),
-                              //   // leading: Icon(
-                              //   //   Icons.file_present,
-                              //   //   size: 40,
-                              //   //   color: Theme.of(context).primaryColor,
-                              //   // ),
-                              //   trailing:
-                              //       records[index].helpType == "မႆၢႁႅင်းဝၼ်း"
-                              //           ? Text("ႁႅင်းဝၼ်း",
-                              //               style: TextStyle(
-                              //                   fontSize: 12,
-                              //                   color: Theme.of(context)
-                              //                       .textTheme
-                              //                       .headline6
-                              //                       .color
-                              //                       .withOpacity(.4)))
-                              //           : Text("ႁႅင်းလိတ်ႉဢွႆႈ",
-                              //               style: TextStyle(
-                              //                   fontSize: 12,
-                              //                   color: Theme.of(context)
-                              //                       .textTheme
-                              //                       .headline6
-                              //                       .color
-                              //                       .withOpacity(.4))),
-                              //   subtitle: Text(
-                              //     "${utils.fmtDate(records[index].timeStamp)}",
-                              //     style: TextStyle(fontSize: 12),
-                              //   ),
-                              // );
+                              });                             
                             },
                             itemCount: records.length,
                           ),
