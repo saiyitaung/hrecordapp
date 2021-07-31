@@ -152,7 +152,7 @@ class PaidChart extends StatelessWidget {
                                 leading: Text("${index + 1}"),
                                 title: Text(
                                   "${paidItem(items)[index].name}",
-                                  style: TextStyle(fontSize: 20),
+                                  style: TextStyle(fontSize: 15),
                                 ),
                                 trailing: Text(
                                   "${paidItem(items)[index].paid.price.toInt()} Kyats",

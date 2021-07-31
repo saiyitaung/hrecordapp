@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:hrecord/entities/pay.dart';
 import 'package:hrecord/mytheme/mytheme.dart';
 import 'package:hrecord/fadepageroute.dart';
 import 'package:hive/hive.dart';
@@ -146,7 +147,8 @@ class _MyHomePageState extends State<MyHomePage>
         gettingHelp: [],
         needToHelpBack: [],
         isfinished: false,
-        name: "us");
+        name: "us",
+        paid: Pay(count: 0, price: 0.0));
     Hive.openBox<Item>(newRecord.id).then((value) => value.put(home.id, home));
   }
 
@@ -215,12 +217,13 @@ class _MyHomePageState extends State<MyHomePage>
                                 child: Text(
                                   "ၽိုၼ်မၢႆ",
                                   style: TextStyle(
-                                    color: Theme.of(context)
-                                        .textTheme
-                                        .headline1
-                                        .color,
-                                    fontSize: 18,
-                                  ),
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .headline1
+                                          .color,
+                                      fontSize: 18,
+                                      fontFamily: "Padauk",
+                                      fontWeight: FontWeight.bold),
                                 ),
                                 padding: EdgeInsets.only(left: 30, top: 10),
                               )
@@ -232,48 +235,51 @@ class _MyHomePageState extends State<MyHomePage>
                             padding: EdgeInsets.zero,
                             itemBuilder: (context, index) {
                               return OpenContainer<String>(
-                                transitionDuration: Duration(milliseconds: 350),
-                                transitionType: ContainerTransitionType.fade,
-                                closedColor: Theme.of(context).scaffoldBackgroundColor,
-                                closedElevation: 0,
-                                onClosed:(recordId){
-                                   if(recordId != null){
-                                     print("delete id $recordId");
+                                  transitionDuration:
+                                      Duration(milliseconds: 350),
+                                  transitionType: ContainerTransitionType.fade,
+                                  closedColor:
+                                      Theme.of(context).scaffoldBackgroundColor,
+                                  closedElevation: 0,
+                                  onClosed: (recordId) {
+                                    if (recordId != null) {
+                                      print("delete id $recordId");
                                       rBox.delete(recordId);
-                                   }
-                                },
+                                    }
+                                  },
                                   closedBuilder: (context, closeContainer) {
-                                return ListTile(
-                                  title: Text(
-                                    "${records[index].name}",
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                  // onTap: () {
-                                  //   route(RecordDetail(r: records[index]))
-                                  //       .then((value) {
-                                  //     if (value != null) {
-                                  //       rBox.delete(value);
-                                  //     }
-                                  //   });
-                                  // },
-                                  leading: Container(
-                                    width: 45,
-                                    height: 45,
-                                    child: Image(
-                                      fit: BoxFit.scaleDown,
-                                      image: AssetImage("img/file.png"),
-                                    ),
-                                  ),
-                                  // leading: Icon(
-                                  //   Icons.file_present,
-                                  //   size: 40,
-                                  //   color: Theme.of(context).primaryColor,
-                                  // ),
-                                  trailing:
-                                      records[index].helpType == "မႆၢႁႅင်းဝၼ်း"
+                                    return ListTile(
+                                      title: Text(
+                                        "${records[index].name}",
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                                      // onTap: () {
+                                      //   route(RecordDetail(r: records[index]))
+                                      //       .then((value) {
+                                      //     if (value != null) {
+                                      //       rBox.delete(value);
+                                      //     }
+                                      //   });
+                                      // },
+                                      leading: Container(
+                                        width: 45,
+                                        height: 45,
+                                        child: Image(
+                                          fit: BoxFit.scaleDown,
+                                          image: AssetImage("img/file.png"),
+                                        ),
+                                      ),
+                                      // leading: Icon(
+                                      //   Icons.file_present,
+                                      //   size: 40,
+                                      //   color: Theme.of(context).primaryColor,
+                                      // ),
+                                      trailing: records[index].helpType ==
+                                              "မႆၢႁႅင်းဝၼ်း"
                                           ? Text("ႁႅင်းဝၼ်း",
                                               style: TextStyle(
                                                   fontSize: 12,
+                                                  fontFamily: "Padauk",
                                                   color: Theme.of(context)
                                                       .textTheme
                                                       .headline6
@@ -282,19 +288,21 @@ class _MyHomePageState extends State<MyHomePage>
                                           : Text("ႁႅင်းလိတ်ႉဢွႆႈ",
                                               style: TextStyle(
                                                   fontSize: 12,
+                                                  fontFamily: "Padauk",
                                                   color: Theme.of(context)
                                                       .textTheme
                                                       .headline6
                                                       .color
                                                       .withOpacity(.4))),
-                                  subtitle: Text(
-                                    "${utils.fmtDate(records[index].timeStamp)}",
-                                    style: TextStyle(fontSize: 12),
-                                  ),
-                                );
-                              }, openBuilder: (context, openContainer) {
-                                return RecordDetail(r: records[index]);
-                              });                             
+                                      subtitle: Text(
+                                        "${utils.fmtDate(records[index].timeStamp)}",
+                                        style: TextStyle(fontSize: 12),
+                                      ),
+                                    );
+                                  },
+                                  openBuilder: (context, openContainer) {
+                                    return RecordDetail(r: records[index]);
+                                  });
                             },
                             itemCount: records.length,
                           ),
@@ -397,7 +405,7 @@ class _MyHomePageState extends State<MyHomePage>
                                       child: Text("Close"))
                                 ],
                                 content: Text(
-                                  "version     : 1.6.0  \nrelease in : July 5,2021 \nI hope my app will help to solve some of our daily problem for recording helping each other.If you have any problem with the app ,please contact me  saiyitaung@gmail.com .\nThank you for using my app :-)",
+                                  "version     : 1.7.0  \nrelease in : July 5,2021 \nI hope my app will help to solve some of our daily problem for recording helping each other.If you have any problem with the app ,please contact me  saiyitaung@gmail.com .\nThank you for using my app :-)",
                                   // textAlign: TextAlign.center,
                                 ),
                               ));
@@ -410,46 +418,46 @@ class _MyHomePageState extends State<MyHomePage>
           // ),
         ],
       ),
-      floatingActionButton:AnimatedBuilder(
+      floatingActionButton: AnimatedBuilder(
         animation: controller,
         builder: (context, child) {
           return FadeTransition(opacity: fadeAni, child: child);
         },
-        child:
-       Container(
-        margin: EdgeInsets.only(
-            right: (MediaQuery.of(context).size.width / 100) * 40),
-        child: OpenContainer<Record>(
-            transitionDuration: Duration(milliseconds: 350),
-            transitionType: ContainerTransitionType.fade,
-            closedColor: Theme.of(context).primaryColor,
-            closedShape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-            closedBuilder: (context, closeContainer) {
-              return Container(
-                width: 50,
-                height: 50,
-                child: Icon(
-                  Icons.add,
-                  color: Colors.white,
-                ),
-              );
-            },
-            onClosed: (v) {
-              if (v != null) {
-                // print("new record ${v.name}");
-                setState(() {
-                  // records.add(value);
-                  rBox.put(v.id, v);
-                  addToNewRecord(v);
-                  // Fluttertoast.showToast(msg: "New Record Created.");
-                });
-              }
-            },
-            openBuilder: (context, openContainer) {
-              return NewRecord();
-            }),
-      ),),
+        child: Container(
+          margin: EdgeInsets.only(
+              right: (MediaQuery.of(context).size.width / 100) * 40),
+          child: OpenContainer<Record>(
+              transitionDuration: Duration(milliseconds: 350),
+              transitionType: ContainerTransitionType.fade,
+              closedColor: Theme.of(context).primaryColor,
+              closedShape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(50)),
+              closedBuilder: (context, closeContainer) {
+                return Container(
+                  width: 50,
+                  height: 50,
+                  child: Icon(
+                    Icons.add,
+                    color: Colors.white,
+                  ),
+                );
+              },
+              onClosed: (v) {
+                if (v != null) {
+                  // print("new record ${v.name}");
+                  setState(() {
+                    // records.add(value);
+                    rBox.put(v.id, v);
+                    addToNewRecord(v);
+                    // Fluttertoast.showToast(msg: "New Record Created.");
+                  });
+                }
+              },
+              openBuilder: (context, openContainer) {
+                return NewRecord();
+              }),
+        ),
+      ),
       // floatingActionButton: AnimatedBuilder(
       //   animation: controller,
       //   builder: (context, child) {
@@ -504,7 +512,10 @@ class _MyHomePageState extends State<MyHomePage>
   Text menuItemText(String text) {
     return Text(
       text,
-      style: TextStyle(color: white),
+      style: TextStyle(
+        color: white,
+        fontFamily: "Padauk",
+      ),
     );
   }
 

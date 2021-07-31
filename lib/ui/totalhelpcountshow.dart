@@ -14,7 +14,7 @@ class TotalHelpShow extends StatelessWidget {
         Text(
           title,
           style: TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 18, color: color),
+              fontWeight: FontWeight.bold, fontSize: 18, color: color,fontFamily:"Padauk",),
         ),
         Text(
           "$totalCount",

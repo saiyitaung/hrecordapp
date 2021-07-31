@@ -19,7 +19,7 @@ class _NewRecordState extends State<NewRecord> {
       // resizeToAvoidBottomPadding: false,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text("တၢင်ႇၽိုၼ်မႂ်ႇ"),
+        title: Text("တၢင်ႇၽိုၼ်မႂ်ႇ",style: TextStyle(fontFamily:"Padauk",),),
       ),
       body: Container(
         margin: EdgeInsets.only(
@@ -61,7 +61,7 @@ class _NewRecordState extends State<NewRecord> {
                                 himg = "img/nh.png";
                               });
                             }),
-                        Text("မႆၢႁႅင်းဝၼ်း",style: TextStyle(color: selectedItem=="မႆၢႁႅင်းဝၼ်း"?Colors.teal:null),),
+                        Text("မႆၢႁႅင်းဝၼ်း",style: TextStyle(color: selectedItem=="မႆၢႁႅင်းဝၼ်း"?Colors.teal:null,fontFamily:"Padauk",),),
                       ],
                     ),
                   ),
@@ -78,7 +78,7 @@ class _NewRecordState extends State<NewRecord> {
                                 himg = "img/sgc.png";
                               });
                             }),
-                        Text("မႆၢႁႅင်းလိတ်ႉဢွႆႈ",style: TextStyle(color: selectedItem=="မႆၢႁႅင်းလိတ်ႉဢွႆႈ"?Colors.teal:null),)
+                        Text("မႆၢႁႅင်းလိတ်ႉဢွႆႈ",style: TextStyle(color: selectedItem=="မႆၢႁႅင်းလိတ်ႉဢွႆႈ"?Colors.teal:null,fontFamily:"Padauk",),)
                       ],
                     ),
                   )
@@ -136,7 +136,8 @@ class _NewRecordState extends State<NewRecord> {
               decoration: InputDecoration(
                   hintText: "သႂ်ပၼ်ၸိုဝ်ႈ",
                   labelText: "သႂ်ပၼ်ၸိုဝ်ႈ",
-                   hintStyle: TextStyle(color: Theme.of(context).textTheme.subtitle1.color.withOpacity(.5)),
+                  labelStyle:TextStyle(fontFamily:"Padauk",),
+                   hintStyle: TextStyle(color: Theme.of(context).textTheme.subtitle1.color.withOpacity(.5),fontFamily:"Padauk",),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   )),
@@ -172,7 +173,7 @@ class _NewRecordState extends State<NewRecord> {
                 child: Text(
                   "ႁဵတ်းဢၼ်မႂ်ႇ",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16, color: Colors.white),
+                  style: TextStyle(fontSize: 16, color: Colors.white,fontFamily:"Padauk",),
                 ),
                 width: double.infinity,
                 margin: EdgeInsets.only(left: 10, right: 10),

@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.6.0+1
+version: 1.7.0+1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -32,6 +32,8 @@ dependencies:
   path_provider: ^2.0.2
   permission_handler: ^8.1.0
   animations: ^2.0.0
+  pdf: ^3.4.2
+  file_picker: ^3.0.4
 
 flutter_icons:
   android: "launcher_icon"
@@ -74,10 +76,13 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: Padauk
+      fonts:
+        - asset: fonts/Padauk-Regular.ttf
+    - family: Pyidaungsu
+      fonts:
+        - asset: fonts/Pyidaungsu-2.5_Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

@@ -42,6 +42,7 @@ class HelpDetail extends StatelessWidget {
                   collapsedIconColor: Theme.of(context).textTheme.headline6.color,
                   title: Text(
                     "ထႅမ်သႂ်ႇထႅင်ႈ",
+                    style: TextStyle(fontFamily:"Padauk",),
                   ),
                   children: [
                     TextFormField(
@@ -49,8 +50,8 @@ class HelpDetail extends StatelessWidget {
                       
                       showCursor: true,
                       decoration: InputDecoration(
-                        hintText: "လွင်ႈတၢင်း/ဢွင်ႈ/ၸိုဝ်ႈ",
-                        hintStyle: TextStyle(fontSize: 12,color: Theme.of(context).textTheme.headline6.color.withOpacity(.4)),
+                        hintText: "လွင်ႈတၢင်း/ဢွင်ႈ/ၸိုဝ်ႈ",                      
+                        hintStyle: TextStyle(fontSize: 12,color: Theme.of(context).textTheme.headline6.color.withOpacity(.4),fontFamily:"Padauk",),
                         contentPadding: EdgeInsets.only(left: 10),
                       ),
                       controller: callBackDetailController,
@@ -74,7 +75,7 @@ class HelpDetail extends StatelessWidget {
                         ),
                         child: Text(
                           "ထႅမ်သႂ်ႇ",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.white,fontFamily:"Padauk",),
                         ),
                       ),
                       width: double.infinity,
@@ -99,6 +100,7 @@ class HelpDetail extends StatelessWidget {
             fontSize: 18,
             fontWeight: FontWeight.bold,
             color: color,
+            fontFamily:"Padauk",
           ),
         ),
         Expanded(

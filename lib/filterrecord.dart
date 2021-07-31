@@ -10,7 +10,7 @@ class FilterRecord extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(title,style: TextStyle(fontFamily: "Padauk"),),
       ),
       body: records.length > 0
           ? ListView.builder(
@@ -25,7 +25,14 @@ class FilterRecord extends StatelessWidget {
                                   r: records[index],
                                 )));
                   },
-                  leading: Icon(Icons.file_present),
+                  leading: Container(
+                                    width: 45,
+                                    height: 45,
+                                    child: Image(
+                                      fit: BoxFit.scaleDown,
+                                      image: AssetImage("img/file.png"),
+                                    ),
+                                  ),
                   subtitle: Text("${utils.fmtDate(records[index].timeStamp)}"),
                 );
               },

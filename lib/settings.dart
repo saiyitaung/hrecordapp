@@ -1,7 +1,15 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:hrecord/entities/help.dart';
+import 'package:hrecord/entities/item.dart';
+import 'package:hrecord/entities/record.dart';
 import 'package:hrecord/mytheme/mytheme.dart';
+import 'package:hrecord/ui/confirmdialog.dart';
 
 class Settings extends StatefulWidget {
   final MyTheme myTheme;
@@ -69,7 +77,11 @@ class _SettingState extends State<Settings> {
             ),
           ),
           ListTile(
-            title: Text("ၵႃႊၶၼ် တႃႇ လိတ်ႉဢွႆႈ"),
+            title: Text(
+              "ၵႃႊၶၼ် တႃႇ လိတ်ႉဢွႆႈ",
+              style:
+                  TextStyle(fontFamily: "Padauk", fontWeight: FontWeight.bold),
+            ),
             subtitle: ValueListenableBuilder(
               builder: (context, box, child) {
                 return Text("${sugarcanePearPrice.text} kyats");
@@ -95,7 +107,11 @@ class _SettingState extends State<Settings> {
             },
           ),
           ListTile(
-            title: Text("ၵႃႊၶၼ် တႃႇ ႁႅင်းဝၼ်း"),
+            title: Text(
+              "ၵႃႊၶၼ် တႃႇ ႁႅင်းဝၼ်း",
+              style:
+                  TextStyle(fontFamily: "Padauk", fontWeight: FontWeight.bold),
+            ),
             subtitle: ValueListenableBuilder(
               builder: (context, box, child) {
                 return Text("${regularHelpPrice.text} kyats");
@@ -111,14 +127,17 @@ class _SettingState extends State<Settings> {
                       )).then((value) {
                 //print(regularHelpPrice.text);
                 // if(settings.get("regularhelp") != null){
-
                 // }
                 settings.put("regularhelp", regularHelpPrice.text);
               });
             },
           ),
           ListTile(
-            title: Text("သႂ်ႇ လွင်ႈတၢင်း တႃႇ ႁႅင်းဝၼ်း"),
+            title: Text(
+              "သႂ်ႇ လွင်ႈတၢင်း တႃႇ ႁႅင်းဝၼ်း",
+              style:
+                  TextStyle(fontFamily: "Padauk", fontWeight: FontWeight.bold),
+            ),
             subtitle: ValueListenableBuilder(
               builder: (context, box, child) {
                 return Text("${defaultregulardetailCtl.text}");
@@ -138,7 +157,11 @@ class _SettingState extends State<Settings> {
             },
           ),
           ListTile(
-            title: Text("သႂ်ႇ လွင်ႈတၢင်း တႃႇ  လိတ်ႉဢွႆႈ"),
+            title: Text(
+              "သႂ်ႇ လွင်ႈတၢင်း တႃႇ  လိတ်ႉဢွႆႈ",
+              style:
+                  TextStyle(fontFamily: "Padauk", fontWeight: FontWeight.bold),
+            ),
             subtitle: ValueListenableBuilder(
               builder: (context, box, child) {
                 return Text("${defaultsugarcanedetailCtl.text}");
@@ -157,6 +180,83 @@ class _SettingState extends State<Settings> {
                 }
               });
             },
+          ),
+          ListTile(
+            title: Text("Import record from file"),
+            onTap: () async {
+              try {
+                final pickedFile = await FilePicker.platform.pickFiles();
+                if (pickedFile != null) {
+                  PlatformFile pf = pickedFile.files.first;
+                  if (pf.name.split(".")[1] == "hrecord") {
+                    print(pf.name.split(".")[1]);
+                    File f = File(pf.path);
+                    var str = await f.readAsString();
+                    var strdata = json.decode(str);
+                    // print(strdata);
+
+                    Record r = Record.fronJson(strdata['record']);
+                    List<Item> items = [];
+                    strdata['helps'].forEach((h) {
+                      print(h);
+                      Item i = Item.fronJson(h);
+                      List<Help> nthb = [];
+                      h['needToHelpBack'].forEach((lh) {
+                        nthb.add(Help.fronJson(lh));
+                      });
+                      List<Help> gh = [];
+                      h['gettingHelp'].forEach((lh) {
+                        gh.add(Help.fronJson(lh));
+                      });
+                      i.needToHelpBack = nthb;
+                      i.gettingHelp = gh;
+                      items.add(i);
+                    });
+                    try {
+                      showDialog(
+                          context: context,
+                          builder: (context) => ConfirmDialog(
+                                name: "Import File",
+                                content: r.name,
+                              )).then((value) async {
+                        if (value != null) {
+                          if (value) {
+                            var mainBox = Hive.box<Record>("recordsBox");
+                            if (!mainBox.containsKey(r.id)) {
+                              mainBox.put(r.id, r);
+                              await Hive.deleteBoxFromDisk(r.id);
+                              var rbox = await Hive.openBox<Item>(r.id);
+                              items.forEach((element) async {
+                                await rbox.put(element.id, element);
+                              });
+                            }
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text("Import Data Sucess")));
+                          }
+                        }
+                      });
+                    } catch (e) {
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(SnackBar(content: Text(e.toString())));
+                    }
+                    print("${r.name}");
+                    print("${items.length}");
+                    setState(() {});
+                  } else {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                          "Make sure you import .hrecord file.")));
+                }
+
+                }
+              } catch (e) {
+                print(e.toString());
+
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                        "Oop! Something was wrong!\n\n hrecord file that recorded hrecord version 1.7.0 later.")));
+              }
+            },
           )
         ]),
       ),
@@ -174,7 +274,10 @@ class EditDefaultPrice extends StatelessWidget {
       title: Text(
         title,
         style: TextStyle(
-            fontSize: 16, color: Theme.of(context).textTheme.headline6.color),
+            fontSize: 16,
+            color: Theme.of(context).textTheme.headline6.color,
+            fontFamily: "Padauk",
+            fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
       ),
       content: TextField(
@@ -182,6 +285,9 @@ class EditDefaultPrice extends StatelessWidget {
         keyboardType: TextInputType.number,
         decoration: InputDecoration(
           labelText: "ၵႃႈၶၼ်",
+          labelStyle: TextStyle(
+            fontFamily: "Padauk",
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -199,14 +305,21 @@ class EditDefaultPrice extends StatelessWidget {
                 },
                 child: Text(
                   "ဢမ်ႇသႂ်ႇ",
-                  style: TextStyle(color: Colors.red),
+                  style: TextStyle(
+                      color: Colors.red,
+                      fontFamily: "Padauk",
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               TextButton(
                   onPressed: () {
                     Navigator.pop(context, true);
                   },
-                  child: Text("သႂ်ႇဝႆႉ")),
+                  child: Text(
+                    "သႂ်ႇဝႆႉ",
+                    style: TextStyle(
+                        fontFamily: "Padauk", fontWeight: FontWeight.bold),
+                  )),
             ],
           ),
         )
@@ -225,7 +338,10 @@ class EditDefaultDetail extends StatelessWidget {
       title: Text(
         title,
         style: TextStyle(
-            fontSize: 16, color: Theme.of(context).textTheme.headline6.color),
+            fontSize: 16,
+            color: Theme.of(context).textTheme.headline6.color,
+            fontFamily: "Padauk",
+            fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
       ),
       content: TextField(
@@ -233,6 +349,9 @@ class EditDefaultDetail extends StatelessWidget {
         controller: t,
         decoration: InputDecoration(
           labelText: "လွင်ႈတၢင်း ",
+          labelStyle: TextStyle(
+            fontFamily: "Padauk",
+          ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           ),
@@ -251,14 +370,21 @@ class EditDefaultDetail extends StatelessWidget {
                     },
                     child: Text(
                       "ဢမ်ႇသႂ်ႇ",
-                      style: TextStyle(color: Colors.red),
+                      style: TextStyle(
+                          color: Colors.red,
+                          fontFamily: "Padauk",
+                          fontWeight: FontWeight.bold),
                     ),
                   ),
                   TextButton(
                       onPressed: () {
                         Navigator.pop(context, true);
                       },
-                      child: Text("သႂ်ႇဝႆႉ")),
+                      child: Text(
+                        "သႂ်ႇဝႆႉ",
+                        style: TextStyle(
+                            fontFamily: "Padauk", fontWeight: FontWeight.bold),
+                      )),
                 ])),
       ],
     );

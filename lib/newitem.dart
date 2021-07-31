@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
+import 'package:hrecord/entities/pay.dart';
 import './entities/help.dart';
 import 'package:uuid/uuid.dart';
 import './entities/item.dart';
@@ -38,7 +39,12 @@ class _NewItemState extends State<NewItem> {
       // resizeToAvoidBottomPadding: false,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: Text("မၢႆဢၼ်မႂ်ႇ"),
+        title: Text(
+          "မၢႆဢၼ်မႂ်ႇ",
+          style: TextStyle(
+            fontFamily: "Padauk",
+          ),
+        ),
       ),
       body: Container(
         margin: EdgeInsets.only(left: 10, right: 10, top: 20),
@@ -50,8 +56,18 @@ class _NewItemState extends State<NewItem> {
               //focusNode: FocusScope.of(context),
               decoration: InputDecoration(
                   hintText: "ၸိုဝ်ႈ",
-                  labelText:  "ၸိုဝ်ႈ",
-                  hintStyle: TextStyle(color: Theme.of(context).textTheme.subtitle1.color.withOpacity(.5)),
+                  labelText: "ၸိုဝ်ႈ",
+                  labelStyle: TextStyle(
+                    fontFamily: "Padauk",
+                  ),
+                  hintStyle: TextStyle(
+                    color: Theme.of(context)
+                        .textTheme
+                        .subtitle1
+                        .color
+                        .withOpacity(.5),
+                    fontFamily: "Padauk",
+                  ),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10))),
             ),
@@ -66,21 +82,24 @@ class _NewItemState extends State<NewItem> {
                     child: Row(
                       children: [
                         Radio(
-                            value: "မႃးထႅမ်ႁဝ်း",
-                            groupValue: selecteditem,
-                            onChanged: (v) {
-                              setState(() {
-                                selecteditem = v;
-                              });
-                            },
-                            fillColor: MaterialStateProperty.resolveWith((states) => Theme.of(context).primaryColor),
-                            ),
+                          value: "မႃးထႅမ်ႁဝ်း",
+                          groupValue: selecteditem,
+                          onChanged: (v) {
+                            setState(() {
+                              selecteditem = v;
+                            });
+                          },
+                          fillColor: MaterialStateProperty.resolveWith(
+                              (states) => Theme.of(context).primaryColor),
+                        ),
                         Text(
                           "မႃးထႅမ်ႁဝ်း",
                           style: TextStyle(
-                              color: selecteditem == "မႃးထႅမ်ႁဝ်း"
-                                  ? Colors.teal
-                                  : null),
+                            color: selecteditem == "မႃးထႅမ်ႁဝ်း"
+                                ? Colors.teal
+                                : null,
+                            fontFamily: "Padauk",
+                          ),
                         ),
                       ],
                     ),
@@ -89,7 +108,8 @@ class _NewItemState extends State<NewItem> {
                     child: Row(
                       children: [
                         Radio(
-                           fillColor: MaterialStateProperty.resolveWith((states) => Theme.of(context).primaryColor),
+                            fillColor: MaterialStateProperty.resolveWith(
+                                (states) => Theme.of(context).primaryColor),
                             value: "ႁဝ်းၵႃႇထႅမ်",
                             groupValue: selecteditem,
                             onChanged: (v) {
@@ -100,9 +120,11 @@ class _NewItemState extends State<NewItem> {
                         Text(
                           "ႁဝ်းၵႃႇထႅမ်",
                           style: TextStyle(
-                              color: selecteditem == "ႁဝ်းၵႃႇထႅမ်"
-                                  ? Colors.teal
-                                  : null),
+                            color: selecteditem == "ႁဝ်းၵႃႇထႅမ်"
+                                ? Colors.teal
+                                : null,
+                            fontFamily: "Padauk",
+                          ),
                         )
                       ],
                     ),
@@ -155,6 +177,12 @@ class _NewItemState extends State<NewItem> {
               decoration: InputDecoration(
                   hintText: "လွင်ႈ/ဢွင်ႈတီႈ",
                   labelText: "လွင်ႈ/ဢွင်ႈတီႈ",
+                  labelStyle: TextStyle(
+                    fontFamily: "Padauk",
+                  ),
+                  hintStyle: TextStyle(
+                    fontFamily: "Padauk",
+                  ),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10))),
               controller: detailCtl,
@@ -164,8 +192,13 @@ class _NewItemState extends State<NewItem> {
             ),
             TextField(
               decoration: InputDecoration(
-                  hintText: "1",                  
-                   hintStyle: TextStyle(color: Theme.of(context).textTheme.subtitle1.color.withOpacity(.5)),
+                  hintText: "1",
+                  hintStyle: TextStyle(
+                      color: Theme.of(context)
+                          .textTheme
+                          .subtitle1
+                          .color
+                          .withOpacity(.5)),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10))),
               keyboardType: TextInputType.number,
@@ -182,7 +215,8 @@ class _NewItemState extends State<NewItem> {
                   Item newItem = Item(
                       id: Uuid().v4(),
                       name: nameCtl.text,
-                      created: DateTime.now());
+                      created: DateTime.now(),
+                      paid: Pay(count: 0, price: 0));
                   // initialize list
                   // print(nameCtl.text);
                   newItem.gettingHelp = [];
@@ -209,6 +243,8 @@ class _NewItemState extends State<NewItem> {
                     showDialog(
                         context: context,
                         builder: (context) => AlertDialog(
+                              backgroundColor:
+                                  Theme.of(context).scaffoldBackgroundColor,
                               actions: [
                                 TextButton(
                                   child: Text("OK"),
@@ -239,14 +275,18 @@ class _NewItemState extends State<NewItem> {
                 child: Text(
                   "မၢႆသႂ်ႇ",
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 18, color: Colors.white),
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontFamily: "Padauk",
+                  ),
                 ),
                 width: double.infinity,
                 // padding: EdgeInsets.only(top: 3, bottom: 3),
               ),
               style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateColor.resolveWith((states) => Theme.of(context).primaryColor),
+                  backgroundColor: MaterialStateColor.resolveWith(
+                      (states) => Theme.of(context).primaryColor),
                   shape: MaterialStateProperty.all(RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(15)))),
             ),

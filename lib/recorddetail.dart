@@ -1,11 +1,19 @@
 //import 'dart:html';
 
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:animations/animations.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:hive/hive.dart';
+import 'package:hrecord/entities/expdata.dart';
 import 'package:hrecord/fadepageroute.dart';
+// import 'package:path_provider/path_provider.dart';
 import './filteritembydate.dart';
 // import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pdf/widgets.dart' as pw;
 
 import './ui/confirmdialog.dart';
 import './itemdetail.dart';
@@ -102,6 +110,160 @@ class _RecordDetailState extends State<RecordDetail>
     return filtered;
   }
 
+  void exportPdf() async {
+    box = await loadBox();
+    final ttfFile = await rootBundle.load('fonts/Pyidaungsu-2.5_Regular.ttf');
+    final pyiDsuFont = pw.Font.ttf(ttfFile);
+    final dirpath = await FilePicker.platform.getDirectoryPath();
+    print("$dirpath");
+    final doc = pw.Document();
+    final helplist = box.values.toList();
+    helplist.sort((a, b) => a.name.compareTo(b.name));
+    print(helplist.length);
+    List<pw.TableRow> tableRows = [];
+    for (int i = 0; i < helplist.length; i++) {
+      if (i == 0) {
+        tableRows.add(pw.TableRow(children: [
+          pw.Text("ၶပ်ႉမၢႆ", style: pw.TextStyle(font: pyiDsuFont)),
+          pw.Text("ၸိုဝ်ႈ", style: pw.TextStyle(font: pyiDsuFont)),
+          pw.Text("ထႅမ်ၶဝ်", style: pw.TextStyle(font: pyiDsuFont)),
+          pw.Text("ထႅမ်ႁဝ်း", style: pw.TextStyle(font: pyiDsuFont)),
+        ]));
+        // tableRows.add(pw.TableRow(children: [
+        //   pw.Text("${i + 1}"),
+        //   pw.Text(helplist[i].name, style: pw.TextStyle(font: pyiDsuFont)),
+        //   pw.Text("${utils.totalHelpCount(helplist[i].gettingHelp)}"),
+        //   pw.Text("${utils.totalHelpCount(helplist[i].needToHelpBack)}"),
+        // ]));
+      } else {
+        if (helplist[i].name == "us") {
+          tableRows.add(pw.TableRow(
+            children: [
+              pw.Text("$i"),
+              pw.Text(helplist[i].name, style: pw.TextStyle(font: pyiDsuFont)),
+              pw.Text("-"),
+              pw.Text("${utils.totalHelpCount(helplist[i].needToHelpBack)}"),
+            ],
+          ));
+        } else {
+          tableRows.add(pw.TableRow(
+            children: [
+              pw.Text("$i"),
+              pw.Text(helplist[i].name, style: pw.TextStyle(font: pyiDsuFont)),
+              pw.Text("${utils.totalHelpCount(helplist[i].gettingHelp)}"),
+              pw.Text("${utils.totalHelpCount(helplist[i].needToHelpBack)}"),
+            ],
+          ));
+        }
+      }
+    }
+
+    doc.addPage(
+      pw.MultiPage(
+        build: (context) {
+          return [
+            pw.Header(
+                child: pw.Text(r.name,
+                    style: pw.TextStyle(
+                      font: pyiDsuFont,
+                      fontSize: 30,
+                    ))),
+            pw.Table(
+              children: tableRows,
+              columnWidths: const {
+                0: pw.FixedColumnWidth(20),
+                1: pw.FixedColumnWidth(50),
+                2: pw.FixedColumnWidth(20),
+                3: pw.FixedColumnWidth(20)
+              },
+              // children: box.values
+              //     .toList()
+              //     .map((e) => pw.TableRow(children: [
+              //           // pw.Text(e.id,style: pw.TextStyle(font: padaukFont)),
+              //           pw.Text(e.name, style: pw.TextStyle(font: pyiDsuFont)),
+              //           pw.Text("${utils.totalHelpCount(e.gettingHelp)}"),
+              //           pw.Text("${utils.totalHelpCount(e.needToHelpBack)}"),
+              //         ]))
+              //     .toList(),
+            ),
+            pw.Divider(),
+            pw.Table(children: [
+              pw.TableRow(children: [
+                pw.Text("ႁဝ်းၵႃႇထႅမ် တင်းမူတ်းမူတ်း",style: pw.TextStyle(font: pyiDsuFont)),
+                pw.Text("${utils.totalGettingHelp(helplist)}"),
+              ]),
+              pw.TableRow(children: [
+                pw.Text("မႃးထႅမ်ႁဝ်း တင်းမူတ်းမူတ်း",style: pw.TextStyle(font: pyiDsuFont)),
+                pw.Text("${utils.totalNeedToHelp(helplist)}"),
+              ]),
+            ]),
+          ];
+        },
+      ),
+    );
+
+    // final path = await getExternalStorageDirectory();
+    try {
+      if (dirpath != null) {
+        final pdfFile = dirpath + "/" + r.name + ".pdf";
+        final pdf = File(pdfFile);
+        showDialog(
+            context: context,
+            builder: (context) => ConfirmDialog(
+                  name: "သူင်ႇဢွၵ်ႇ",
+                  content:pdfFile,
+                )).then((value) async {
+          if (value != null) {
+            if (value) {
+              print("$value");
+              pdf.writeAsBytesSync(await doc.save());
+              ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Data ${r.name}.pdf Successfully!")));
+            }
+          }
+        });
+      }
+    } catch (e) {
+      print(e);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
+    }
+  }
+
+  void exportHrecordData() async {
+    box = await loadBox();
+    try {
+      final dirpath = await FilePicker.platform.getDirectoryPath();
+      final helplist = box.values.toList();
+      try {
+        if (dirpath != null) {
+          final fileExport = dirpath + "/" + r.name + ".hrecord";
+          final myh = File(fileExport);
+          ExportData ed = ExportData(r, helplist);
+          showDialog(
+              context: context,
+              builder: (context) => ConfirmDialog(
+                    name: "သူင်ႇဢွၵ်ႇ",
+                    content: fileExport,
+                  )).then((value) async {
+            if (value != null) {
+              if (value) {
+                myh.writeAsString(json.encode(ed));
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text("Exported $fileExport successfully!")));
+              }
+            }
+          });
+        }
+      } catch (e) {
+        print(e.toString());
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.toString())));
+    }
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -125,6 +287,37 @@ class _RecordDetailState extends State<RecordDetail>
                               "${r.name}",
                               style: TextStyle(fontSize: 18),
                             ),
+                            actions: [
+                              PopupMenuButton<String>(
+                                enabled:box.values.length > 1,
+                                itemBuilder: (context) => [
+                                  PopupMenuItem(
+                                    child: Text(
+                                      "သူင်ႇဢွၵ်ႇ PDF",
+                                      style: TextStyle(fontFamily: "Padauk"),
+                                    ),
+                                    value: "pdf",
+                                    
+                                  ),
+                                  PopupMenuItem(
+                                    child: Text(
+                                      "သူင်ႇဢွၵ်ႇ hrecord",
+                                      style: TextStyle(fontFamily: "Padauk"),
+                                    ),
+                                    value: "hfile",
+                                  ),
+                                ],
+                                color:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                                onSelected: (text) {
+                                  if (text == "pdf") {
+                                    exportPdf();
+                                  } else if (text == "hfile") {
+                                    exportHrecordData();
+                                  }
+                                },
+                              ),
+                            ],
                             pinned: true,
                             expandedHeight: 130,
                             stretch: true,
@@ -196,7 +389,8 @@ class _RecordDetailState extends State<RecordDetail>
                                     closedElevation: 0,
                                     closedBuilder: (context, closeContainer) {
                                       return ListTile(
-                                        tileColor: Theme.of(context).scaffoldBackgroundColor,
+                                        tileColor: Theme.of(context)
+                                            .scaffoldBackgroundColor,
                                         contentPadding: EdgeInsets.all(6),
                                         dense: true,
                                         leading: Text("${index + 1}"),
@@ -246,7 +440,7 @@ class _RecordDetailState extends State<RecordDetail>
                                         subtitle: Text(
                                           "${utils.fmtDate(item.created)}",
                                           style: TextStyle(fontSize: 14),
-                                        ),                                       
+                                        ),
                                       );
                                     },
                                     openBuilder: (context, openContainer) {
@@ -414,7 +608,7 @@ class _RecordDetailState extends State<RecordDetail>
                           onPressed: () {
                             showDialog(
                                     builder: (context) => ConfirmDialog(
-                                          name: "Delete ${r.name}",
+                                          name: "ၽႅတ်ႈ ${r.name}",
                                           content: "တေၽႅတ်ႈတေႉႁႃႉ?",
                                         ),
                                     context: context)
@@ -462,6 +656,9 @@ class EditRecordPrice extends StatelessWidget {
       title: Text(
         "လႅၵ်ႈလၢႆႈၵႃႈၶၼ်?",
         textAlign: TextAlign.center,
+        style: TextStyle(
+          fontFamily: "Padauk",
+        ),
       ),
       content: TextField(
         controller: ctl,
@@ -469,8 +666,9 @@ class EditRecordPrice extends StatelessWidget {
         decoration: InputDecoration(
           hintText: "ၵႃႈၶၼ်ယၢမ်းလဵဝ် $previousPrice kyats",
           hintStyle: TextStyle(
-              color:
-                  Theme.of(context).textTheme.subtitle1.color.withOpacity(.5)),
+            color: Theme.of(context).textTheme.subtitle1.color.withOpacity(.5),
+            fontFamily: "Padauk",
+          ),
         ),
       ),
       actions: [
@@ -485,14 +683,22 @@ class EditRecordPrice extends StatelessWidget {
                 },
                 child: Text(
                   "ဢမ်ႇယဝ်ႉ",
-                  style: TextStyle(color: Colors.red),
+                  style: TextStyle(
+                    color: Colors.red,
+                    fontFamily: "Padauk",
+                  ),
                 ),
               ),
               TextButton(
                   onPressed: () {
                     Navigator.pop(context, true);
                   },
-                  child: Text("တေႉယဝ်ႉ"))
+                  child: Text(
+                    "တေႉယဝ်ႉ",
+                    style: TextStyle(
+                      fontFamily: "Padauk",
+                    ),
+                  ))
             ],
           ),
         )
@@ -575,13 +781,15 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
                     cursorColor: Colors.teal,
                     style: TextStyle(color: Colors.teal, fontSize: 20),
                     decoration: InputDecoration(
-                        hintText: "Search",
+                        hintText: "တႅမ်ႈႁႃ",
                         hintStyle: TextStyle(
-                            color: Theme.of(context)
-                                .textTheme
-                                .headline6
-                                .color
-                                .withOpacity(.5)),
+                          color: Theme.of(context)
+                              .textTheme
+                              .headline6
+                              .color
+                              .withOpacity(.5),
+                          fontFamily: "Padauk",
+                        ),
                         border: InputBorder.none),
                     onChanged: (q) {
                       setState(() {
@@ -614,7 +822,12 @@ class _CustomSearchState extends State<CustomSearchHintDelegate> {
                       onPressed: () {
                         Navigator.of(context).pop("createNew");
                       },
-                      child: Text("မၢႆဢၼ်မႂ်ႇ"),
+                      child: Text(
+                        "မၢႆဢၼ်မႂ်ႇ",
+                        style: TextStyle(
+                          fontFamily: "Padauk",
+                        ),
+                      ),
                     ),
                   ),
                 ),

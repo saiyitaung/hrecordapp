@@ -77,7 +77,7 @@ class _ItemDetailState extends State<ItemDetail> {
                           context: context,
                           builder: (context) {
                             return ConfirmDialog(
-                              name: "Delete ${item.name}",
+                              name: "ၽႅတ်ႈ ${item.name}",
                               content: "တေၽႅတ်ႈတေႉႁႃႉ?",
                             );
                           }).then((value) {
@@ -196,7 +196,8 @@ class _ItemDetailState extends State<ItemDetail> {
                                               "ၼပ်ႉ",
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                  fontSize: 14,
+                                                  fontSize: 18,
+                                                  fontFamily:"Padauk",
                                                   fontWeight: FontWeight.bold),
                                             )),
                                             Container(
@@ -204,15 +205,18 @@ class _ItemDetailState extends State<ItemDetail> {
                                               "ၵႃႈၶၼ်",
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                  fontSize: 14,
+                                                  fontSize: 18,
+                                                  fontFamily:"Padauk",
                                                   fontWeight: FontWeight.bold),
                                             )),
                                             Container(
                                                 child: Text(
                                               "ၶၼ်ႁုပ်ႉတုမ်ႊ",
+                                              
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                  fontSize: 14,
+                                                  fontSize: 18,
+                                                  fontFamily:"Padauk",
                                                   fontWeight: FontWeight.bold),
                                             )),
                                           ]),
@@ -368,7 +372,7 @@ class _ItemDetailState extends State<ItemDetail> {
                                               "ပေႃးသွၼ်ႇယဝ်ႉလႅၵ်ႈလၢႆႊၶိုၼ်းဢမ်ႇလႆႈယဝ်ႉ",
                                         );
                                       }).then((value) {
-                                    if (value) {
+                                    if (value != null && value) {
                                       setState(() {
                                         item.paid = Pay(
                                             count: utils.subHelpCount(item),
@@ -390,6 +394,7 @@ class _ItemDetailState extends State<ItemDetail> {
                                   : utils.subHelpCount(item) < 0
                                       ? " ၸၢႆႇႁႂ်ႈယဝ်ႉ "
                                       : " received paymanent",
+                                      style: TextStyle(fontFamily:"Padauk",),
                             ),
                           ),
                           style: TextButton.styleFrom(

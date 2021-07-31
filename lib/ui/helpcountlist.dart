@@ -30,7 +30,7 @@ class HelpCountList extends StatelessWidget {
                   // contentPadding: EdgeInsets.only(top:2,bottom:2),
                   title: Text(
                     "${lh[index].detail}",
-                    style: TextStyle(fontSize: 12),
+                    style: TextStyle(fontSize: 12,),
                   ),
                   trailing: Text(
                     "${lh[index].count}",
@@ -45,12 +45,12 @@ class HelpCountList extends StatelessWidget {
                                 return AlertDialog(
                                   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
                                   title: Text(
-                                    "${lh[index].detail} ${lh[index].count}",
+                                    "ၽႅတ်ႈ ${lh[index].detail} ${lh[index].count}",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(color: Colors.red),
                                   ),
                                   content:
-                                      Text("တေၽႅတ်ႈတေႉႁႃႉ?"),
+                                      Text("တေၽႅတ်ႈတေႉႁႃႉ?",textAlign: TextAlign.center,style: TextStyle(fontFamily:"Padauk",),),
                                   actions: [
                                    Container(
                                      width: MediaQuery.of(context).size.width,
@@ -59,13 +59,13 @@ class HelpCountList extends StatelessWidget {
                                       onPressed: () {
                                         Navigator.pop(context, false);
                                       },
-                                      child: Text( "ဢမ်ႇ"),
+                                      child: Text( "ဢမ်ႇ",style: TextStyle(fontFamily:"Padauk",),),
                                     ),
                                     TextButton(
                                         onPressed: () {
                                           Navigator.pop(context, true);
                                         },
-                                        child: Text("တေႉယဝ်ႉ",style: TextStyle(color: Colors.red),))
+                                        child: Text("တေႉယဝ်ႉ",style: TextStyle(color: Colors.red,fontFamily:"Padauk",),))
                                      ],),
                                    )
                                   ],

@@ -6,15 +6,17 @@ class ConfirmDialog extends StatelessWidget {
   ConfirmDialog({this.name, this.content});
   Widget build(BuildContext context) {
     return AlertDialog(
+      
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       title: Text(
         "$name",
         textAlign: TextAlign.center,
-        style: TextStyle(color: Colors.redAccent),
+        style: TextStyle(color: Colors.redAccent,fontFamily:"Padauk",),
       ),
       content: Text(
         content,
         textAlign: TextAlign.center,
+        style: TextStyle(fontFamily:"Padauk",),
       ),
       actions: [
         Container(child:TextButton(
@@ -25,7 +27,7 @@ class ConfirmDialog extends StatelessWidget {
             },
             child: Text(
               "ဢမ်ႇ",
-              style: TextStyle(color: Colors.red),
+              style: TextStyle(color: Colors.red,fontFamily:"Padauk",),
             )),width: MediaQuery.of(context).size.width/3,),
             Container(width: MediaQuery.of(context).size.width/3,child:
         TextButton(
@@ -36,7 +38,7 @@ class ConfirmDialog extends StatelessWidget {
             },
             child: Text(
               "တေႉယဝ်ႉ",
-              style: TextStyle(color: Colors.green),
+              style: TextStyle(color: Colors.green,fontFamily:"Padauk",),
             )),),
       ],
     );
